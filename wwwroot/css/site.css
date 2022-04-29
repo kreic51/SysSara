@@ -1,0 +1,51 @@
+.text-sm .btn.btn-tool {    
+    font-size: 1.345rem !important;
+  }
+
+
+  .form-control-sm + .select2-container--bootstrap4 .select2-selection--single {    
+    height: calc(1.8125rem + 2px) !important;    
+    border-radius: 0.2rem;
+}
+
+    .form-control-sm + .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered {
+        padding-left: 0.5rem;
+        padding-top: 0rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        line-height: calc(1.25em + 0.75rem);
+        color: #495057;
+    }
+
+  .select2-search--dropdown .select2-search__field {
+    height: calc(1.8125rem + 2px) !important;
+    border-radius: 0.2rem;
+    padding-left: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    line-height: calc(1.25em + 0.75rem);
+    color: #495057;
+}
+
+.select2-search--dropdown .select2-search__field:focus {
+    border: 1px solid #80bdff;
+}
+
+.select2-container--bootstrap4 .select2-selection:focus{
+  border: 1px solid #80bdff;
+  box-shadow: none;
+}
+
+.select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow b {
+    border-color: #ced4da transparent transparent transparent;
+}
+
+.dark-mode .select2-container--bootstrap4 .select2-selection--single .select2-selection__rendered { 
+    color: #fff;
+    
+    background-color: #343a40;
+}
+
+.dark-mode .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow b {
+    border-color: #6c757d transparent transparent transparent;
+} 

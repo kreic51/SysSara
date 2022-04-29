@@ -1,0 +1,110 @@
+<nav id="MenuBar" class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+    <!-- Add icons to the links using the .nav-icon class
+          with font-awesome or any other icon font library -->
+    <li id="M1" class="nav-item">
+      <a asp-action="Index" asp-controller="Home" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+          Dashboard
+          @* <i class="right fas fa-angle-left"></i> *@
+        </p>
+      </a>
+      @* <ul class="nav nav-treeview">
+        <li id="M1H1" class="nav-item">
+          <a href="./index.html" class="nav-link active">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>              
+      </ul> *@
+    </li>
+    <li id="M2" class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+          Almacen
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li id="M2H1" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Entradas</p>
+          </a>
+        </li>
+        <li id="M2H2" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Salidas</p>
+          </a>
+        </li> 
+        <li id="M2H3" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Devoluciones</p>
+          </a>
+        </li> 
+        <li id="M2H4" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Cambios</p>
+          </a>
+        </li> 
+      </ul>
+    </li>
+    <li id="M3" class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-copy"></i>
+        <p>
+          Produccion
+          <i class="fas fa-angle-left right"></i>                
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li id="M3H" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Registro</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li id="M4" class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="fas fa-book nav-icon"></i>
+        <p>
+          Recursos Humanos
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li id="M4H1" class="nav-item">
+          <a asp-action="Empleados" asp-controller="RH" class="nav-link">
+            <i class="fas fa-users nav-icon"></i>
+            <p>Empleados</p>
+          </a>
+        </li>
+        <li id="M4H2" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-user-check nav-icon"></i>
+            <p>Checador</p>
+          </a>
+        </li> 
+        <li id="M4H3" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-coins nav-icon"></i>
+            <p>Nomina</p>
+          </a>
+        </li> 
+        <li id="M4H4" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-credit-card nav-icon"></i>
+            <p>Creditos</p>
+          </a>
+        </li> 
+      </ul>
+    </li>
+  </ul>
+</nav>

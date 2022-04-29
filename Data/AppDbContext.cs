@@ -6,33 +6,24 @@ public class AppDbContext : DbContext
     {
     }
 
-    public DbSet<Empleado> Empleados { get; set; }
-    public DbSet<Domicilio> Domicilios { get; set; }    
-    public DbSet<Rol> Roles { get; set; }
+    public DbSet<Empleado>? Empleados { get; set; }
+    public DbSet<Domicilio>? Domicilios { get; set; }    
+    public DbSet<Roles>? Roles { get; set; }
+    public DbSet<Rol>? catRoles { get; set; }
+    public DbSet<Departamento>? Departamentos { get; set; }
+    public DbSet<Estado>? Estados { get; set; }
+    public DbSet<Municipio>? Municipios { get; set; }
+    public DbSet<Poblacion>? Poblaciones { get; set; }
+    public DbSet<Tiposangre>? Tiposangres { get; set; }
 
     /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=Test");
     } */
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Empleado>(entity => {
-            entity.ToTable("Empleados");
-            entity.HasKey(x => x.EmpleadoId);
-        });
-
-        modelBuilder.Entity<Domicilio>(entity => {
-            entity.ToTable("Domicilios");
-            entity.HasKey(x => x.DomicilioId);
-            entity.HasOne(x => x.Empleado).WithOne(y => y.Domicilio);
-        });
-
-        modelBuilder.Entity<Rol>(entity => {
-            entity.ToTable("Roles");
-            entity.HasKey(x => x.RolId);
-            entity.HasOne(x => x.Empleado).WithMany(y => y.Roles);
-        });
-            
+        modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());        
     }
 
 }
