@@ -4,8 +4,8 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
-        //context.Database.EnsureDeleted();
-        context.Database.EnsureCreated(); //Revisa si esta creada la bd, si no esta la crea.
+        //context.Database.EnsureDeleted(); //Elimina la bd si existe.
+        context.Database.EnsureCreated(); //Revisa si la bd existe, si no la crea.
 
         // Busca si la tabla empleados tiene algun dato
         if (context.Empleados.Any())
@@ -197,19 +197,20 @@ public static class DbInitializer
             context.Tiposangres.Add(t);
         }
 
+        var est = new Estatus[]
+        {
+            new Estatus { EstatusId = "V", Descripcion = "Vigente" },
+            new Estatus { EstatusId = "B", Descripcion = "Baja" },                    
+        };
+
+        foreach (Estatus e in est)
+        {
+            context.Estatuses.Add(e);
+        }
+
 
         var Empleados = new Empleado[]
         {
-            /* new Empleado {Apaterno="Admin", Amaterno= "Admin", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
-                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16")},
-            new Empleado {Apaterno="Rojas", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
-                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16")},
-            new Empleado {Apaterno="Prueba", Amaterno= "Prueba", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16")} */
-
             new Empleado {Apaterno="Admin", Amaterno= "Admin", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
                         Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
                         Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 1},
@@ -218,7 +219,34 @@ public static class DbInitializer
                         Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 2},
             new Empleado {Apaterno="Prueba", Amaterno= "Prueba", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
                         Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 3}
+                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 3},
+            new Empleado {Apaterno="Lopez", Amaterno= "Rojo", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
+                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 4},
+            new Empleado {Apaterno="Lugo", Amaterno= "Cardenaz", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
+                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 5},
+            new Empleado {Apaterno="De la rocha", Amaterno= "Cataluña", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
+                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 6},
+            new Empleado {Apaterno="Romero", Amaterno= "Alcazar", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
+                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 7},
+            new Empleado {Apaterno="Espinoza", Amaterno= "Lizarraga", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
+                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 8},
+            new Empleado {Apaterno="Martinez", Amaterno= "Ficth", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
+                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 9},
+            new Empleado {Apaterno="Regalado", Amaterno= "Cuadras", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
+                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 10},
+            new Empleado {Apaterno="Muñoz", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
+                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 11},
+            new Empleado {Apaterno="Lerma", Amaterno= "Sainz", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
+                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 12}
         };
 
         foreach (Empleado e in Empleados)
@@ -228,10 +256,15 @@ public static class DbInitializer
 
         var Domicilios = new Domicilio[]
         {
-            /* new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia=1, PoblacionId="0001", MunicipioId="001", EstadoId="01", EmpleadoId = 1 },
-            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia=9, PoblacionId="0001", MunicipioId="001", EstadoId="01", EmpleadoId = 2  },
-            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia=9, PoblacionId="0001", MunicipioId="001", EstadoId="01", EmpleadoId = 3  } */
-
+            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
+            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
+            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
+            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
+            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
+            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
+            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
+            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
+            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
             new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
             new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
             new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  }
@@ -247,4 +280,3 @@ public static class DbInitializer
         context.SaveChanges();
     }
 }
-    

@@ -13,110 +13,6 @@ public class RHController : Controller
         _catContext = context;
     }
 
-/*     public async Task<IActionResult> Empleados(string sortOrder, string searchString, MensajeDto? mens = null)
-    {        
-        ViewBag.MenuActivo = "M4";
-        ViewBag.MenuActivoH = "M4H1";
-
-        ViewBag.APaternoSortParm = String.IsNullOrEmpty(sortOrder) ? "Apaterno_desc" : "";
-        ViewBag.AMaternoSortParm = sortOrder == "Amaterno" ? "Amaterno_desc" : "Amaterno";
-
-        if(mens != null) ViewData["Mensaje"] = mens;
-
-        List<EmpleadosListDto> lEmpleados = new();
-    
-        try{
-            
-            IEnumerable<Empleado> Empleados =  await _unitOfWork.Empleados.GetAllWhitRelation();
-
-           /*  foreach(var emp in Empleados){
-                lEmpleados.Add(
-                    new EmpleadosListDto(){
-                        EmpleadoId = emp.EmpleadoId,
-                        Apaterno = emp.Apaterno,
-                        Amaterno = emp.Amaterno,
-                        Nombre = emp.Nombre,
-                        Estatus = emp.Estatus,
-                        Descripcion = await _catContext.Departamentos.Where(x => x.DepartamentoId == emp.DepartamentoId).Select(x => x.Descripcion).SingleOrDefaultAsync(),
-                    }
-                );
-            } */
-
-            /* lEmpleados =  (from emp in Empleados
-                        join dep in _catContext.Departamentos on emp.DepartamentoId equals dep.DepartamentoId 
-                        select new EmpleadosListDto() {
-                            EmpleadoId = emp.EmpleadoId,
-                            Apaterno = emp.Apaterno,
-                            Amaterno = emp.Amaterno,
-                            Nombre = emp.Nombre,
-                            Estatus = emp.Estatus,
-                            Descripcion = dep.Descripcion,}
-                        ).ToList(); */
-
-            /* lEmpleados = Empleados
-                        .Join(_catContext.Departamentos, 
-                            e => e.DepartamentoId, 
-                            d => d.DepartamentoId, 
-                            (e, d) => new EmpleadosListDto
-                                {
-                                    EmpleadoId = e.EmpleadoId,
-                                    Apaterno = e.Apaterno,
-                                    Amaterno = e.Amaterno,
-                                    Nombre = e.Nombre,
-                                    Estatus = e.Estatus,
-                                    Descripcion = d.Descripcion
-                                }
-                        ).ToList(); */
-                                
-            /*var llEmpleados = Empleados
-                        .Join(_catContext.Departamentos, 
-                            e => e.DepartamentoId, 
-                            d => d.DepartamentoId, 
-                            (e, d) => new EmpleadosListDto
-                                {
-                                    EmpleadoId = e.EmpleadoId,
-                                    Apaterno = e.Apaterno,
-                                    Amaterno = e.Amaterno,
-                                    Nombre = e.Nombre,
-                                    Estatus = e.Estatus,
-                                    Descripcion = d.Descripcion
-                                }
-                        );
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                llEmpleados = llEmpleados.Where(e => e.Apaterno.Contains(searchString)
-                                            || e.Amaterno.Contains(searchString)
-                                            || e.Nombre.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "Apaterno_desc":
-                    llEmpleados = llEmpleados.OrderByDescending(e => e.Apaterno);
-                    break;
-                case "Amaterno":
-                    llEmpleados = llEmpleados.OrderBy(e => e.Amaterno);
-                    break;
-                case "Amaterno_desc":
-                    llEmpleados = llEmpleados.OrderByDescending(e => e.Amaterno);
-                    break;
-                default:
-                    llEmpleados = llEmpleados.OrderBy(e => e.Apaterno);
-                    break;
-            }
-
-
-
-
-            lEmpleados = llEmpleados.ToList();
-
-        }catch(Exception ex){
-            ViewData["Mensaje"] = new MensajeDto(true, "Error", ex.Message, IconError.Error);            
-        }
-
-        return View(lEmpleados);
-    } */
-
     public async Task<IActionResult> Empleados(string sortOrder, string currentFilter, string searchString, MensajeDto? mens = null, int Pagina = 1, int Filas = 10)
     {        
         ViewBag.MenuActivo = "M4";
@@ -143,29 +39,32 @@ public class RHController : Controller
         List<EmpleadosListDto> lEmpleados = new();
         PaginaResultado<EmpleadosListDto> lEmpleadosp = new();
     
-        try{
-                                            
+        try
+        {            
             IQueryable<EmpleadosListDto> llEmpleados = _catContext.Empleados
-                        .Join(_catContext.Departamentos, 
-                            e => e.DepartamentoId, 
-                            d => d.DepartamentoId, 
-                            (e, d) => new EmpleadosListDto
-                                {
-                                    EmpleadoId = e.EmpleadoId,
-                                    Apaterno = e.Apaterno,
-                                    Amaterno = e.Amaterno,
-                                    Nombre = e.Nombre,
-                                    Estatus = e.Estatus,
-                                    Descripcion = d.Descripcion
-                                }
-                        ); 
-            
+                .Join(_catContext.Departamentos, 
+                    emp => emp.DepartamentoId, 
+                    dep => dep.DepartamentoId, 
+                    (emp, dep) => new { emp, dep})
+                .Join(_catContext.Estatuses,
+                    empdep => empdep.emp.Estatus,
+                    est => est.EstatusId,
+                    (empdep, est) => new EmpleadosListDto
+                        {
+                            EmpleadoId = empdep.emp.EmpleadoId,
+                            Apaterno = empdep.emp.Apaterno,
+                            Amaterno = empdep.emp.Amaterno,
+                            Nombre = empdep.emp.Nombre,
+                            Estatus = est.Descripcion,
+                            Descripcion = empdep.dep.Descripcion
+                        }
+                );
+
                         
             if (!String.IsNullOrEmpty(searchString))
             {
                 llEmpleados = llEmpleados.Where(e => e.Apaterno.Contains(searchString)
-                                            || e.Amaterno.Contains(searchString)
-                                            || e.Nombre.Contains(searchString));
+                    || e.Amaterno.Contains(searchString) || e.Nombre.Contains(searchString));
             }
 
              switch (sortOrder)
@@ -242,6 +141,7 @@ public class RHController : Controller
             empleado.Poblaciones = cPob;
             empleado.Colonias = cPob;
             empleado.TiposSangre = new SelectList(_catContext.Tiposangres.ToList(),"SangreId","Descripcion");
+            empleado.Estatuses = new SelectList(_catContext.Estatuses.ToList(),"EstatusId","Descripcion");
         }catch(Exception ex){
             Console.WriteLine(ex);
         }
@@ -302,7 +202,7 @@ public class RHController : Controller
         emp.Poblaciones = cPob;
         emp.Colonias = cPob;
         emp.TiposSangre = new SelectList(_catContext.Tiposangres.ToList(),"SangreId","Descripcion");
-        
+        emp.Estatuses = new SelectList(_catContext.Estatuses.ToList(),"EstatusId","Descripcion");
         return View(emp);
     }
 

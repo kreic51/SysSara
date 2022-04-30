@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<Municipio>? Municipios { get; set; }
     public DbSet<Poblacion>? Poblaciones { get; set; }
     public DbSet<Tiposangre>? Tiposangres { get; set; }
+    public DbSet<Estatus>? Estatuses { get; set; }
 
     /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

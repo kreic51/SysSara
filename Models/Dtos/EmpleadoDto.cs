@@ -39,6 +39,7 @@ public class EmpleadoDto
     public SelectList? Municipios { get; set; }
     public SelectList? Poblaciones { get; set; }
     public SelectList? Colonias { get; set; }
+    public SelectList? Estatuses { get; set; }
 
     public MensajeDto? Mensaje { get; set; } = new();
 }

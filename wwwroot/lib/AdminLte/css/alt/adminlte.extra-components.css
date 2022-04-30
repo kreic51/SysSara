@@ -532,6 +532,16 @@
   background-color: #fff;
 }
 
+.info-box .info-box .bg-orange,
+.info-box .info-box .bg-gradient-orange {
+  color: #1f2d3d;
+}
+
+.info-box .info-box .bg-orange .progress-bar,
+.info-box .info-box .bg-gradient-orange .progress-bar {
+  background-color: #1f2d3d;
+}
+
 .info-box .info-box-more {
   display: block;
 }
@@ -666,6 +676,16 @@
 .dark-mode .info-box .info-box .bg-dark .progress-bar,
 .dark-mode .info-box .info-box .bg-gradient-dark .progress-bar {
   background-color: #fff;
+}
+
+.dark-mode .info-box .info-box .bg-orange,
+.dark-mode .info-box .info-box .bg-gradient-orange {
+  color: #1f2d3d;
+}
+
+.dark-mode .info-box .info-box .bg-orange .progress-bar,
+.dark-mode .info-box .info-box .bg-gradient-orange .progress-bar {
+  background-color: #1f2d3d;
 }
 
 .timeline {
@@ -1157,6 +1177,16 @@
   border-left-color: #343a40;
 }
 
+.direct-chat-orange .right > .direct-chat-text {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #1f2d3d;
+}
+
+.direct-chat-orange .right > .direct-chat-text::after, .direct-chat-orange .right > .direct-chat-text::before {
+  border-left-color: #fd7e14;
+}
+
 .direct-chat-lightblue .right > .direct-chat-text {
   background-color: #3c8dbc;
   border-color: #3c8dbc;
@@ -1443,6 +1473,16 @@
 
 .dark-mode .direct-chat-dark .right > .direct-chat-text::after, .dark-mode .direct-chat-dark .right > .direct-chat-text::before {
   border-left-color: #343a40;
+}
+
+.dark-mode .direct-chat-orange .right > .direct-chat-text {
+  background-color: #fd7e14;
+  border-color: #fd7e14;
+  color: #1f2d3d;
+}
+
+.dark-mode .direct-chat-orange .right > .direct-chat-text::after, .dark-mode .direct-chat-orange .right > .direct-chat-text::before {
+  border-left-color: #fd7e14;
 }
 
 .dark-mode .direct-chat-lightblue .right > .direct-chat-text {
