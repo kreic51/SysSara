@@ -117,7 +117,7 @@ public class RHController : Controller
         return View(lEmpleados);
     } */
 
-    public async Task<IActionResult> Empleados(string sortOrder, string currentFilter, string searchString, MensajeDto? mens = null, int? page = 1)
+    public async Task<IActionResult> Empleados(string sortOrder, string currentFilter, string searchString, MensajeDto? mens = null, int Pagina = 1, int Filas = 10)
     {        
         ViewBag.MenuActivo = "M4";
         ViewBag.MenuActivoH = "M4H1";
@@ -128,7 +128,7 @@ public class RHController : Controller
         
         if (searchString != null)
         {
-            page = 1;
+            Pagina = 1;
         }
         else
         {
@@ -141,12 +141,11 @@ public class RHController : Controller
         if(mens != null) ViewData["Mensaje"] = mens;
 
         List<EmpleadosListDto> lEmpleados = new();
+        PaginaResultado<EmpleadosListDto> lEmpleadosp = new();
     
         try{
-            
-            IEnumerable<Empleado> Empleados =  await _unitOfWork.Empleados.GetAllWhitRelation();
-                                
-            var llEmpleados = Empleados
+                                            
+            IQueryable<EmpleadosListDto> llEmpleados = _catContext.Empleados
                         .Join(_catContext.Departamentos, 
                             e => e.DepartamentoId, 
                             d => d.DepartamentoId, 
@@ -159,9 +158,8 @@ public class RHController : Controller
                                     Estatus = e.Estatus,
                                     Descripcion = d.Descripcion
                                 }
-                        );
-            //var llEmpleados = _catContext.Empleados.Include(x => x.Domicilio);
-
+                        ); 
+            
                         
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -170,7 +168,7 @@ public class RHController : Controller
                                             || e.Nombre.Contains(searchString));
             }
 
-            switch (sortOrder)
+             switch (sortOrder)
             {
                 case "Apaterno_desc":
                     llEmpleados = llEmpleados.OrderByDescending(e => e.Apaterno);
@@ -187,17 +185,17 @@ public class RHController : Controller
             }
            
             
-            lEmpleados = llEmpleados.ToList();
+            lEmpleadosp = await llEmpleados.GetPaginaResultadoAsync(Pagina, Filas);
             
 
         }catch(Exception ex){
             ViewData["Mensaje"] = new MensajeDto(true, "Error", ex.Message, IconError.Error);            
         }
+        
+        
 
-        int pageSize = 10;
-        int pageNumber = (page ?? 1);
-            //lEmpleados.Skip((pageNumber) * pageSize).Take(pageSize).ToList()
-        return View(lEmpleados);
+
+        return View(lEmpleadosp);
     }
 
 

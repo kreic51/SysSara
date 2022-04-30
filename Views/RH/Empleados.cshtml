@@ -1,4 +1,5 @@
-@model IEnumerable<SysSara.Models.Dtos.EmpleadosListDto>
+@* @model IEnumerable<SysSara.Models.Dtos.EmpleadosListDto> *@
+@model SysSara.Data.PaginaResultado<EmpleadosListDto>
 
 @{
     ViewData["Title"] = "Empleados";
@@ -29,10 +30,9 @@
           <div class="card-body">
             @using (Html.BeginForm())
             {
-              <p>
-                Buscar: @Html.TextBox("SearchString")  
-                <input type="submit" value="Buscar" />
-              </p>
+                <label>Buscar:</label>
+                @Html.TextBox("SearchString")
+                <input type="submit" value="Buscar" />              
             }
           </div>
         </div>
@@ -57,25 +57,25 @@
                   @* <th>@Html.DisplayNameFor(model => model.FirstOrDefault().EmpleadoId)</th>*@
                   <th>#</th>
                   <th>@Html.ActionLink(
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Apaterno), 
+                    @Html.DisplayNameFor(model => model.Resultados.FirstOrDefault().Apaterno), 
                     "Empleados", new { sortOrder = ViewBag.APaternoSortParm })</th>                  
                   <th>@Html.ActionLink(
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Amaterno), 
+                    @Html.DisplayNameFor(model => model.Resultados.FirstOrDefault().Amaterno), 
                     "Empleados", new { sortOrder = ViewBag.AMaternoSortParm })</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Descripcion)</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Estatus)</th>
+                  <th>@Html.DisplayNameFor(model => model.Resultados.FirstOrDefault().Nombre)</th>
+                  <th>@Html.DisplayNameFor(model => model.Resultados.FirstOrDefault().Descripcion)</th>
+                  <th>@Html.DisplayNameFor(model => model.Resultados.FirstOrDefault().Estatus)</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                @{ var i = 1; }
-                @foreach (var item in Model) {
-                  @* var rowNo = (Model.CurrentPage - 1) * Model.PageSize + i; *@                  
-                  i++;
+                @{ var ir = 1; }
+                @foreach (var item in Model.Resultados) {
+                  var rowNo = (Model.PaginaActual - 1) * Model.FilasPagina + ir;
+                  ir++;
                   <tr>
                     @* <td>@Html.DisplayFor(modelItem => item.EmpleadoId)</td> *@
-                    <td>@i</td>
+                    <td>@rowNo</td>
                     <td>@Html.DisplayFor(modelItem => item.Apaterno)</td>
                     <td>@Html.DisplayFor(modelItem => item.Amaterno)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nombre)</td>
@@ -99,9 +99,104 @@
         } *@
 
       </div>          
-    </div>        
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card card-orange card-outline">
+          <div class="card-body">
+
+                    Pagina <span class="badge badge-secondary">@Model.PaginaActual</span> de <span class="badge badge-secondary">@Model.TotalPaginas</span>
+
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        <li class="page-item @(!Model.Primero? "disabled":"")">
+
+                            <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-id="1">
+                                <i class="fas fa-angle-double-left"></i>
+                                <span class="sr-only">First</span>
+                            </a>
+
+                            @*<a class="page-link"
+                               data-ajax="true"
+                               data-ajax-begin="IndexOnBegin"
+                               data-ajax-success="IndexOnSuccess"
+                               data-ajax-mode="replace"
+                               data-ajax-loading="#Loading"
+                               data-ajax-update="#VistaParcial"
+                               href="@Url.Action("Index","Home", new { Pagina = 1 })">
+
+                                <i class="fas fa-angle-double-left"></i>
+                                <span class="sr-only">First</span>
+                            </a>*@
+
+                        </li>
+
+                        @for (int i = Model.PaginaInicial; i <= Model.PaginaFinal; i++)
+                        {
+                            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                                <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-id="@i">
+                                    <span aria-hidden="true">@i</span>
+                                    <span class="sr-only">@i</span>
+                                </a>
+
+                                @*<a class="page-link" 
+                                    data-ajax="true"                                    
+                                    data-ajax-mode="replace"
+                                    data-ajax-loading="#Loading"
+                                    data-ajax-update="#VistaParcial"
+                                    asp-action="IndexBusqueda" asp-controller="Home" 
+                                    asp-route-Filas="@Model.FilasPagina" asp-route-Pagina="@i" 
+                                    asp-route-Fecha_Ini="@Model.Fecha_Ini" 
+                                    asp-route-Fecha_Fin="@Model.Fecha_Fin"
+                                    asp-route-Estado="@Model.Estado">
+                                    <span aria-hidden="true">@i</span>
+                                    <span class="sr-only">@i</span>
+                                </a>*@
+
+                                @*<a class="page-link" 
+                                    data-ajax="true"
+                                    data-ajax-begin="IndexOnBegin"
+                                    data-ajax-success="IndexOnSuccess"
+                                    data-ajax-mode="replace"
+                                    data-ajax-loading="#Loading"
+                                    data-ajax-update="#VistaParcial"
+                                    href="@Url.Action("Index","Home", new { Pagina = i })">
+                                    
+                                    <span aria-hidden="true">@i</span>
+                                    <span class="sr-only">@i</span>
+                                </a>*@
+
+                            </li>
+                        }
+
+                        <li class="page-item @(!Model.Ultimo? "disabled":"")">
+                            <a class="page-link" asp-action="Index" asp-controller="Home" asp-route-id="@Model.TotalPaginas">
+                                <i class="fas fa-angle-double-right"></i>
+                                <span class="sr-only">Last</span>
+                            </a>
+
+                            @*<a class="page-link" 
+                                    data-ajax="true"
+                                    data-ajax-begin="IndexOnBegin"
+                                    data-ajax-success="IndexOnSuccess"
+                                    data-ajax-mode="replace"
+                                    data-ajax-loading="#Loading"
+                                    data-ajax-update="#VistaParcial"
+                                    href="@Url.Action("Index","Home", new { Pagina = Model.TotalPaginas })">
+                                    
+                                    <i class="fas fa-angle-double-right"></i>
+                                    <span class="sr-only">Last</span>
+                            </a>*@
+
+
+                        </li>
+                    </ul>
+                </div>
+      </div>
+    </div>
+
   </div>
-</div>    
+</div>
 
 <script>     
 
