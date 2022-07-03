@@ -4,7 +4,7 @@ public class Rol
 {    
     public int RolId { get; set; }
     public string? Descripcion { get; set; }
-    public string? Estatus { get; set; }
+    public string? EstatusId { get; set; }
     public string? UserRegistro { get; set; }
     public DateTime? FechaRegistro { get; set; }
     public DateTime? FechaEstatus { get; set; }    

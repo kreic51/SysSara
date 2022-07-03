@@ -7,8 +7,7 @@ public class Departamento
     public string? Estatus { get; set; }
     public string? UserRegistro { get; set; }
     public DateTime? FechaRegistro { get; set; }
-    public DateTime? FechaEstatus { get; set; }    
-    //public ICollection<Empleado>? Empleados { get; set; }
+    public DateTime? FechaEstatus { get; set; }
 }
 
 public class DepartamentoConfiguration : IEntityTypeConfiguration<Departamento>

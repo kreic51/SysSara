@@ -27,37 +27,33 @@ function selectMenu(_MenuActivo, _MenuActivoH) {
   });
 };
 
+const fillChildCombo = function (Combo, Url, Param = {}) {
 
-const fillChildCombo = function (Combo, Url, Param = {}, Hijo = false) {
-  
-  if (Param !== null) {
-      Object.entries(Param).forEach(function (entry, index) {            
-          Url = Url + (index === 0 ? '?' : '&');
-          const [key, value] = entry;
-          Url = `${Url}${key}=${value}`;
-      });
-  }
-  
-  Combo.querySelectorAll('option').forEach(option => option.remove());
+    if (Param !== null) {
+        Object.entries(Param).forEach(function (entry, index) {
+            Url = index === 0 ? Url + '?' : Url + '&';
+            const [key, value] = entry;
+            Url = `${Url}${key}=${value}`;
+        });
+    }
 
-  getJsonData(Url).then(result => {
-      if (result.success !== false) {
-          result.forEach(function (item) {
-              const option = document.createElement('option');
-              option.value = item.value;
-              option.text = item.text;
-              Combo.appendChild(option);
-          });
+    Combo.querySelectorAll('option').forEach(option => option.remove());
 
-          if (Hijo) {                
-              Combo.dispatchEvent(new Event('change'));
-          }
-          
-          return;
-      }
-      MensajeAlerta(result.responseTitulo, result.responseMensaje, result.responseIcon);
-      console.log(result.responseMensaje);
-  });    
+    getJsonData(Url).then(result => {
+        if (result.success !== false) {
+            result.forEach(function (item) {
+                const option = document.createElement('option');
+                option.value = item.value;
+                option.text = item.text;
+                Combo.appendChild(option);
+            });
+            Combo.dispatchEvent(new Event('change'));
+            return;
+        }
+        MensajeAlerta(result.responseTitulo, result.responseMensaje, result.responseIcon);
+        console.log(result.responseMensaje);
+    });
+
 };
 
 const MensajeAlerta = function(titulo, mensaje, icono){
@@ -68,6 +64,13 @@ const MensajeAlerta = function(titulo, mensaje, icono){
   });
 };
 
+const MensajeAlertaAsync = async function (titulo, mensaje, icono) {
+    return await Swal.fire({
+        title: titulo,
+        text: decodeHTMLEntities(mensaje),
+        icon: icono
+    });
+};
 
 const MensajeConfirmacion = function(titulo, mensaje, icono, href) {
   Swal.fire({
@@ -85,7 +88,18 @@ const MensajeConfirmacion = function(titulo, mensaje, icono, href) {
   })
 };
 
-
+const MensajeConfirmacionAsync = async function (titulo, mensaje, icono, href) {
+    return await Swal.fire({
+        title: titulo,
+        text: decodeHTMLEntities(mensaje),
+        icon: icono,
+        showCancelButton: true,        
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Si, borralo!'
+    });
+};
 
 
 const getJsonData = async function (url = '') {

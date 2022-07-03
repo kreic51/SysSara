@@ -1,13 +1,12 @@
 namespace SysSara.Data;
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+
     }
 
-    public DbSet<Empleado>? Empleados { get; set; }
-    public DbSet<Domicilio>? Domicilios { get; set; }    
+    public DbSet<Empleado>? Empleados { get; set; }    
     public DbSet<Roles>? Roles { get; set; }
     public DbSet<Rol>? catRoles { get; set; }
     public DbSet<Departamento>? Departamentos { get; set; }
@@ -15,7 +14,8 @@ public class AppDbContext : DbContext
     public DbSet<Municipio>? Municipios { get; set; }
     public DbSet<Poblacion>? Poblaciones { get; set; }
     public DbSet<Tiposangre>? Tiposangres { get; set; }
-    public DbSet<Estatus>? Estatuses { get; set; }
+    public DbSet<Estatus>? Estatus { get; set; }
+    public DbSet<Sucursal>? Sucursales { get; set; }
 
     /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

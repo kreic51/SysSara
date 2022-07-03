@@ -13,18 +13,22 @@ public class Empleado
     public string? Celular { get; set; }
     public string? Rfc { get; set; }
     public int? Categoria { get; set; }
-    public int? TipoSangre { get; set; }
+    public int? TipoSangre { get; set; }    
+    public int? DepartamentoId { get; set; }
+    public int? SucursalId { get; set; }
+    public string? Calle { get; set; }
+    public string? NoExt { get; set; }
+    public string? NoInt { get; set; }
+    public string? Colonia { get; set; }
+    public string? PoblacionId { get; set; }
+    public string? MunicipioId { get; set; }
+    public string? EstadoId { get; set; }
     public DateTime? FechaIngreso { get; set; } = DateTime.Now;
-    public string? Estatus { get; set; }
-    public string? Usuario { get; set; }
-    public string? Contraseña { get; set; }
+    public string? EstatusId { get; set; }
     public string? UserRegistro { get; set; }
-    public int? DepartamentoId { get; set; }    
-    public int? DomicilioId { get; set; }    
     public DateTime? FechaRegistro { get; set; }
-    public Domicilio? Domicilio { get; set; }
-    public ICollection<Roles>? Roles { get; set; }
-    
+    public Departamento? Departamento { get; set; }
+    public Estatus? Estatus { get; set; }
 }
 
 public class EmpleadoConfiguration : IEntityTypeConfiguration<Empleado>
@@ -32,7 +36,6 @@ public class EmpleadoConfiguration : IEntityTypeConfiguration<Empleado>
     public void Configure(EntityTypeBuilder<Empleado> builder)
     {
         builder.ToTable("Empleados");
-	    builder.HasKey(e => e.EmpleadoId);	
-        //builder.HasOne(x => x.Domicilio).WithOne(y => y.Empleado).HasForeignKey<Domicilio>(x => x.EmpleadoId);
+	    builder.HasKey(e => e.EmpleadoId);
     }
 }

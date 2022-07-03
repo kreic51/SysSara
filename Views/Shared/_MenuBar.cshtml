@@ -72,8 +72,8 @@
       </ul>
     </li>
     <li id="M4" class="nav-item">
-      <a href="#" class="nav-link">
-        <i class="fas fa-book nav-icon"></i>
+      <a href="#" class="nav-link">        
+        <i class="fas fa-users-cog nav-icon"></i>
         <p>
           Recursos Humanos
           <i class="right fas fa-angle-left"></i>
@@ -81,7 +81,7 @@
       </a>
       <ul class="nav nav-treeview">
         <li id="M4H1" class="nav-item">
-          <a asp-action="Empleados" asp-controller="RH" class="nav-link">
+          <a asp-action="ListaEmpleados" asp-controller="Empleados" class="nav-link">
             <i class="fas fa-users nav-icon"></i>
             <p>Empleados</p>
           </a>
@@ -106,5 +106,42 @@
         </li> 
       </ul>
     </li>
+
+    <li id="M5" class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="fas fa-book nav-icon"></i>
+        <p>
+          Catalogos
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li id="M5H1" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">            
+            <i class="fas fa-list-alt nav-icon"></i>
+            <p>Productos</p>
+          </a>
+        </li>
+        @*<li id="M5H2" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-user-check nav-icon"></i>
+            <p>Checador</p>
+          </a>
+        </li> 
+        <li id="M5H3" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-coins nav-icon"></i>
+            <p>Nomina</p>
+          </a>
+        </li> 
+        <li id="M5H4" class="nav-item">
+          <a asp-action="V404" asp-controller="Home" class="nav-link">
+            <i class="fas fa-credit-card nav-icon"></i>
+            <p>Creditos</p>
+          </a>
+        </li> *@
+      </ul>
+    </li>
+
   </ul>
 </nav>

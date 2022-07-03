@@ -1,4 +1,4 @@
-.text-sm .btn.btn-tool {    
+/*.text-sm .btn.btn-tool {    
     font-size: 1.345rem !important;
   }
 
@@ -48,4 +48,33 @@
 
 .dark-mode .select2-container--bootstrap4 .select2-selection--single .select2-selection__arrow b {
     border-color: #6c757d transparent transparent transparent;
-} 
+} */
+
+.action {
+    visibility: hidden;
+}
+
+tr:hover .action {
+    visibility: visible;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-internal-autofill-selected,
+input:-internal-autofill-previewed {
+    background-color: white !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.dark-mode input:-webkit-autofill,
+.dark-mode input:-webkit-autofill:hover,
+.dark-mode input:-webkit-autofill:focus,
+.dark-mode input:-webkit-autofill:active,
+.dark-mode input:-internal-autofill-selected,
+.dark-mode input:-internal-autofill-previewed {
+    color: white;
+    background-color: #343a40 !important;
+    -webkit-box-shadow: 0 0 0 30px #343a40 inset !important;
+}

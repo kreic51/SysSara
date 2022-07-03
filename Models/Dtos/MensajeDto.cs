@@ -1,11 +1,16 @@
 namespace SysSara.Models.Dtos;
 
+public class TieneMensaje
+{
+    public MensajeDto? Mensaje { get; set; }
+}
+
 public class MensajeDto
 {
     public MensajeDto() { }
 
     public MensajeDto(bool mensaje, string titulo, string texto, string icono)
-    {        
+    {
         Mensaje = mensaje;
         Titulo = titulo;
         Texto = texto;
@@ -15,7 +20,7 @@ public class MensajeDto
     public bool Mensaje { get; set; } = false;
     public string? Titulo { get; set; }
     public string? Texto { get; set; }
-    public string? Icono { get; set; }    
+    public string? Icono { get; set; }
 }
 
 public static class IconError

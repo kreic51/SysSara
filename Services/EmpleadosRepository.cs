@@ -1,39 +1,147 @@
 namespace SysSara.Services;
 
+public interface IEmpleadosRepository : IGenericRepository<Empleado>
+{
+    
+    Task<IEnumerable<Empleado>> GetAllWhitRelation();
+    Task<EmpleadoDto> RellenarCatalogos(EmpleadoDto empleado);
+    Task<List<EmpleadosListDto>> ObtenerTodosListDto();    
+    Task<Empleado> ObtenerEmpleado(int id);
+    Task<EmpleadoDto> ObtenerEmpleadoDto(int id);
+    Task<bool> GrabarActualizarEmpleado(EmpleadoDto empleado);
+    Task<bool> EliminarEmpleado(int id);
+}
+
 public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosRepository
 {
-    public EmpleadosRepository(AppDbContext context) : base(context)
+    private readonly IMapper mapper;
+
+    public EmpleadosRepository(AppDbContext context, IMapper mapper) : base(context)
     {
-        
+        this.mapper = mapper;
     }
 
     public async Task<IEnumerable<Empleado>> GetAllWhitRelation()
-    {
-        //return await _context.Set<Empleado>().ToListAsync();
-        return await _context.Empleados            
-            .Include(x => x.Domicilio)
-            .Include(x => x.Roles)
-            .ToListAsync();
-    }
+    {        
+        return await _context.Empleados.ToListAsync();
+    } 
     
+    public async Task<List<EmpleadosListDto>> ObtenerTodosListDto()
+    {
+        List<EmpleadosListDto> empleados = new();
 
-    public async Task<Empleado> GetByIdWhitRelation(int id)
+        try
+        {
+            empleados = await _context.Empleados
+                .Include(e => e.Departamento)
+                .Include(e => e.Estatus)
+                .ProjectTo<EmpleadosListDto>(mapper.ConfigurationProvider).ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
+        return empleados;
+    }
+
+    public async Task<Empleado> ObtenerEmpleado(int id)
     {   
         if(id == 0) return new Empleado();
 
         Empleado? emp;
 
         try{
-            emp = await _context.Empleados.Where(x => x.EmpleadoId == id)                                        
-                                        .Include(x => x.Domicilio)
-                                        .Include(x => x.Roles)
-                                        .FirstOrDefaultAsync();
+            emp = await _context.Empleados.FirstOrDefaultAsync(x => x.EmpleadoId == id);
         }catch
         {
             throw;
         }
         
+        return emp;            
+    }
+
+    public async Task<EmpleadoDto> ObtenerEmpleadoDto(int id)
+    {
+        if (id == 0) return new EmpleadoDto();
+
+        EmpleadoDto? emp;
+
+        try
+        {            
+            emp = await _context.Empleados
+                .ProjectTo<EmpleadoDto>(mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(x => x.EmpleadoId == id);
+        }
+        catch
+        {
+            throw;
+        }
+
         return emp;
+    }
+
+    public async Task<EmpleadoDto> RellenarCatalogos(EmpleadoDto empleado)
+    {
+        try
+        {
+            empleado.Departamentos = new SelectList(await _context.Departamentos.ToListAsync(), "DepartamentoId", "Descripcion");
+            empleado.TiposSangre = new SelectList(await _context.Tiposangres.ToListAsync(), "SangreId", "Descripcion");
+            empleado.Estados = new SelectList(await _context.Estados.ToListAsync(), "Cve_est", "Descripcion", "25");
+            empleado.Municipios = new SelectList(await _context.Municipios.Where(m => m.Cve_est == "25").ToListAsync(), "Cve_mun", "Descripcion", "006");
+            empleado.Poblaciones = new SelectList(await _context.Poblaciones.Where(p => p.Cve_est == "25" && p.Cve_mun == "006").OrderBy(x => x.Descripcion).ToListAsync(), "Cve_pob", "Descripcion", "0001");
+            empleado.Colonias = new SelectList(await _context.Poblaciones.Where(p => p.Cve_est == "25" && p.Cve_mun == "006").OrderBy(x => x.Descripcion).ToListAsync(), "Cve_pob", "Descripcion", "0001");
+            empleado.Estatuses = new SelectList(await _context.Estatus.ToListAsync(), "EstatusId", "Descripcion", "V");
+            empleado.Sucursales = new SelectList(await _context.Sucursales.ToListAsync(), "SucursalId", "Nombre");
+        }
+        catch
+        {
+            throw;
+        }
+
+        return empleado;
+    }
+
+    public async Task<bool> GrabarActualizarEmpleado(EmpleadoDto empleado)
+    {
+        try
+        {
+            var empexist = await _context.Empleados.AsTracking().FirstOrDefaultAsync(x => x.EmpleadoId == empleado.EmpleadoId);
             
+            if (empexist is null)
+            {
+                var emp = mapper.Map<Empleado>(empleado);
+                await _context.AddAsync(emp);
+                return true;
+            }
+
+            empexist = mapper.Map(empleado, empexist);
+        }
+        catch
+        {
+            throw;
+        }
+
+        return true;
+    }
+
+    public async Task<bool> EliminarEmpleado(int id)
+    {
+        try
+        {
+            var empexist = await _context.Empleados.AsTracking().FirstOrDefaultAsync(x => x.EmpleadoId == id);
+
+            if (empexist is not null)
+            {
+                _context.Remove(empexist);
+                return true;
+            }
+        }
+        catch
+        {
+            throw;
+        }
+
+        return true;
     }
 }

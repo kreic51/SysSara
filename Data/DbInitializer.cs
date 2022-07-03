@@ -4,7 +4,7 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
-        //context.Database.EnsureDeleted(); //Elimina la bd si existe.
+        context.Database.EnsureDeleted(); //Elimina la bd si existe.
         context.Database.EnsureCreated(); //Revisa si la bd existe, si no la crea.
 
         // Busca si la tabla empleados tiene algun dato
@@ -30,11 +30,11 @@ public static class DbInitializer
 
         var rols = new Rol[]
         {
-            new Rol { Descripcion = "Admin", Estatus = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
-            new Rol { Descripcion = "Secretaria", Estatus = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
-            new Rol { Descripcion = "Productor", Estatus = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
-            new Rol { Descripcion = "Ventas", Estatus = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
-            
+            new Rol { Descripcion = "Admin", EstatusId = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
+            new Rol { Descripcion = "Secretaria", EstatusId = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
+            new Rol { Descripcion = "Productor", EstatusId = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
+            new Rol { Descripcion = "Ventas", EstatusId = "V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16")},
+
         };
 
         foreach (Rol r in rols)
@@ -83,44 +83,26 @@ public static class DbInitializer
             context.Estados.Add(e);
         }
 
-        var Municipios = new Municipio[] 
+        var Municipios = new Municipio[]
         {
-            new Municipio { Cve_est = "01", Cve_mun = "001", Descripcion = "Aguascalientes" },
-            new Municipio { Cve_est = "01", Cve_mun = "002", Descripcion = "Asientos" },
-            new Municipio { Cve_est = "01", Cve_mun = "003", Descripcion = "Calvillo" },
-            new Municipio { Cve_est = "01", Cve_mun = "004", Descripcion = "Cosío" },
-            new Municipio { Cve_est = "01", Cve_mun = "005", Descripcion = "Jesús María" },
-            new Municipio { Cve_est = "01", Cve_mun = "006", Descripcion = "Pabellón de Arteaga" },
-            new Municipio { Cve_est = "01", Cve_mun = "007", Descripcion = "Rincón de Romos" },
-            new Municipio { Cve_est = "01", Cve_mun = "008", Descripcion = "San José de Gracia" },
-            new Municipio { Cve_est = "01", Cve_mun = "009", Descripcion = "Tepezalá" },
-            new Municipio { Cve_est = "01", Cve_mun = "010", Descripcion = "El Llano" },
-            new Municipio { Cve_est = "01", Cve_mun = "011", Descripcion = "San Francisco de los Romo" },
-            new Municipio { Cve_est = "02", Cve_mun = "001", Descripcion = "Ensenada" },
-            new Municipio { Cve_est = "02", Cve_mun = "002", Descripcion = "Mexicali" },
-            new Municipio { Cve_est = "02", Cve_mun = "003", Descripcion = "Tecate" },
-            new Municipio { Cve_est = "02", Cve_mun = "004", Descripcion = "Tijuana" },
-            new Municipio { Cve_est = "02", Cve_mun = "005", Descripcion = "Playas de Rosarito" },
-            new Municipio { Cve_est = "02", Cve_mun = "006", Descripcion = "San Quintín" },
-            new Municipio { Cve_est = "02", Cve_mun = "007", Descripcion = "San Felipe" },
-            new Municipio { Cve_est = "03", Cve_mun = "001", Descripcion = "Comondú" },
-            new Municipio { Cve_est = "03", Cve_mun = "002", Descripcion = "Mulegé" },
-            new Municipio { Cve_est = "03", Cve_mun = "003", Descripcion = "La Paz" },
-            new Municipio { Cve_est = "03", Cve_mun = "008", Descripcion = "Los Cabos" },
-            new Municipio { Cve_est = "03", Cve_mun = "009", Descripcion = "Loreto" },
-            new Municipio { Cve_est = "04", Cve_mun = "001", Descripcion = "Calkiní" },
-            new Municipio { Cve_est = "04", Cve_mun = "002", Descripcion = "Campeche" },
-            new Municipio { Cve_est = "04", Cve_mun = "003", Descripcion = "Carmen" },
-            new Municipio { Cve_est = "04", Cve_mun = "004", Descripcion = "Champotón" },
-            new Municipio { Cve_est = "04", Cve_mun = "005", Descripcion = "Hecelchakán" },
-            new Municipio { Cve_est = "04", Cve_mun = "006", Descripcion = "Hopelchén" },
-            new Municipio { Cve_est = "04", Cve_mun = "007", Descripcion = "Palizada" },
-            new Municipio { Cve_est = "04", Cve_mun = "008", Descripcion = "Tenabo" },
-            new Municipio { Cve_est = "04", Cve_mun = "009", Descripcion = "Escárcega" },
-            new Municipio { Cve_est = "04", Cve_mun = "010", Descripcion = "Calakmul" },
-            new Municipio { Cve_est = "04", Cve_mun = "011", Descripcion = "Candelaria" },
-            
-
+            new Municipio { Cve_est = "25", Cve_mun = "001", Descripcion = "Ahome" },
+            new Municipio { Cve_est = "25", Cve_mun = "002", Descripcion = "Angostura" },
+            new Municipio { Cve_est = "25", Cve_mun = "003", Descripcion = "Badiraguato" },
+            new Municipio { Cve_est = "25", Cve_mun = "004", Descripcion = "Concordia" },
+            new Municipio { Cve_est = "25", Cve_mun = "005", Descripcion = "Cosalá" },
+            new Municipio { Cve_est = "25", Cve_mun = "006", Descripcion = "Culiacán" },
+            new Municipio { Cve_est = "25", Cve_mun = "007", Descripcion = "Choix" },
+            new Municipio { Cve_est = "25", Cve_mun = "008", Descripcion = "Elota" },
+            new Municipio { Cve_est = "25", Cve_mun = "009", Descripcion = "Escuinapa" },
+            new Municipio { Cve_est = "25", Cve_mun = "010", Descripcion = "El Fuerte" },
+            new Municipio { Cve_est = "25", Cve_mun = "011", Descripcion = "Guasave" },
+            new Municipio { Cve_est = "25", Cve_mun = "012", Descripcion = "Mazatlán" },
+            new Municipio { Cve_est = "25", Cve_mun = "013", Descripcion = "Mocorito" },
+            new Municipio { Cve_est = "25", Cve_mun = "014", Descripcion = "Rosario" },
+            new Municipio { Cve_est = "25", Cve_mun = "015", Descripcion = "Salvador Alvarado" },
+            new Municipio { Cve_est = "25", Cve_mun = "016", Descripcion = "San Ignacio" },
+            new Municipio { Cve_est = "25", Cve_mun = "017", Descripcion = "Sinaloa" },
+            new Municipio { Cve_est = "25", Cve_mun = "018", Descripcion = "Navolato" },
         };
 
         foreach (Municipio m in Municipios)
@@ -128,36 +110,27 @@ public static class DbInitializer
             context.Municipios.Add(m);
         }
 
-        var Poblaciones = new Poblacion[] 
+        var Poblaciones = new Poblacion[]
         {
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0001", Descripcion = "Aguascalientes" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0094", Descripcion = "Granja Adelita" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0096", Descripcion = "Agua Azul" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0100", Descripcion = "Rancho Alegre" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0102", Descripcion = "Los Arbolitos [Rancho]" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0104", Descripcion = "Ardillas de Abajo (Las Ardillas)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0106", Descripcion = "Arellano" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0112", Descripcion = "Bajío los Vázquez" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0113", Descripcion = "Bajío de Montoro" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0120", Descripcion = "Buenavista de Peñuelas" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0121", Descripcion = "Cabecita 3 Marías (Rancho Nuevo)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0125", Descripcion = "Cañada Grande de Cotorina" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0126", Descripcion = "Cañada Honda [Estación]" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0127", Descripcion = "Los Caños" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0128", Descripcion = "El Cariñán" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0135", Descripcion = "El Cedazo (Cedazo de San Antonio)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0138", Descripcion = "Centro de Arriba (El Taray)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0139", Descripcion = "Cieneguilla (La Lumbrera)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0141", Descripcion = "Cobos" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0144", Descripcion = "El Colorado (El Soyatal)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0146", Descripcion = "El Conejal" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0157", Descripcion = "Cotorina de Abajo" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0162", Descripcion = "Coyotes" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0166", Descripcion = "La Huerta (La Cruz)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0170", Descripcion = "Cuauhtémoc (Las Palomas)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0171", Descripcion = "Los Cuervos (Los Ojos de Agua)" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0172", Descripcion = "San José [Granja]" },
-            new Poblacion { Cve_est = "01", Cve_mun = "001", Cve_pob = "0176", Descripcion = "La Chiripa" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0001", Descripcion = "Los Mochis" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0067", Descripcion = "El Aguajito" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0068", Descripcion = "Agua Nueva" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0070", Descripcion = "Ahome" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0072", Descripcion = "Los Algodones" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0076", Descripcion = "El Añil" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0080", Descripcion = "Bacaporobampo" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0081", Descripcion = "Bacorehuis" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0082", Descripcion = "Bachomobampo Número Uno" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0083", Descripcion = "Bagojo Colectivo" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0088", Descripcion = "Ejido Benito Juárez" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0090", Descripcion = "San Isidro" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0095", Descripcion = "El Bule" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0101", Descripcion = "Las Lilas" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0112", Descripcion = "El Carricito" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0115", Descripcion = "Cerrillos (Campo 35)" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0118", Descripcion = "Cohuibampo" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0119", Descripcion = "El Colorado" },
+            new Poblacion { Cve_est = "25", Cve_mun = "001", Cve_pob = "0120", Descripcion = "Compuertas" },
         };
 
         foreach (Poblacion p in Poblaciones)
@@ -165,20 +138,7 @@ public static class DbInitializer
             context.Poblaciones.Add(p);
         }
 
-        ///Se llenan con datos de prueba las tablas de sistema///////////////////////////////////////////////////////////////////////////////////////
-
-        var Roles = new Roles[]
-        {
-            new Roles { RolId=1, Rol = 1, Estatus = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), EmpleadoId=1 },
-            new Roles { RolId=2, Rol = 2, Estatus = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), EmpleadoId=1 },
-            new Roles { RolId=1, Rol = 2, Estatus = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), EmpleadoId=2 },
-            new Roles { RolId=2, Rol = 3, Estatus = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), EmpleadoId=3 }
-        };
-
-        foreach (Roles r in Roles)
-        {
-            context.Roles.Add(r);
-        }
+        /////Se llenan con datos de prueba las tablas de sistema///////////////////////////////////////////////////////////////////////////////////////
 
         var Tipos = new Tiposangre[]
         {
@@ -189,7 +149,7 @@ public static class DbInitializer
             new Tiposangre { Descripcion = "O +" },
             new Tiposangre { Descripcion = "O -" },
             new Tiposangre { Descripcion = "AB +" },
-            new Tiposangre { Descripcion = "AB -" },           
+            new Tiposangre { Descripcion = "AB -" },
         };
 
         foreach (Tiposangre t in Tipos)
@@ -197,56 +157,68 @@ public static class DbInitializer
             context.Tiposangres.Add(t);
         }
 
+        var suc = new Sucursal[]
+        {
+            new Sucursal { Nombre = "Guadalupe", EstatusId = "V", FechaRegistro = new DateTime(2022, 1, 14) },
+            new Sucursal { Nombre = "Tierra Blanca", EstatusId = "V", FechaRegistro = new DateTime(2022, 1, 14) }
+        };
+
+        foreach (Sucursal s in suc)
+        {
+            context.Sucursales.Add(s);
+        }
+
+
         var est = new Estatus[]
         {
             new Estatus { EstatusId = "V", Descripcion = "Vigente" },
-            new Estatus { EstatusId = "B", Descripcion = "Baja" },                    
+            new Estatus { EstatusId = "B", Descripcion = "Baja" },
         };
 
         foreach (Estatus e in est)
         {
-            context.Estatuses.Add(e);
+            context.Estatus.Add(e);
         }
 
 
         var Empleados = new Empleado[]
         {
-            new Empleado {Apaterno="Admin", Amaterno= "Admin", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
-                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 1},
-            new Empleado {Apaterno="Rojas", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+            new Empleado {Apaterno="Admin", Amaterno= "Admin", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5",
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1,
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Rojas", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
-                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 2},
-            new Empleado {Apaterno="Prueba", Amaterno= "Prueba", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Prueba", Amaterno= "Prueba", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 3},
-            new Empleado {Apaterno="Lopez", Amaterno= "Rojo", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
-                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 4},
-            new Empleado {Apaterno="Lugo", Amaterno= "Cardenaz", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Lopez", Amaterno= "Rojo", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5",
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1,
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Lugo", Amaterno= "Cardenaz", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
-                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 5},
-            new Empleado {Apaterno="De la rocha", Amaterno= "Cataluña", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="De la rocha", Amaterno= "Cataluña", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 6},
-            new Empleado {Apaterno="Romero", Amaterno= "Alcazar", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
-                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 7},
-            new Empleado {Apaterno="Espinoza", Amaterno= "Lizarraga", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Romero", Amaterno= "Alcazar", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5",
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1,
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Espinoza", Amaterno= "Lizarraga", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
-                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 8},
-            new Empleado {Apaterno="Martinez", Amaterno= "Ficth", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Martinez", Amaterno= "Ficth", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 9},
-            new Empleado {Apaterno="Regalado", Amaterno= "Cuadras", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5", 
-                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1, 
-                        Estatus="V", Usuario="Admin", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 10},
-            new Empleado {Apaterno="Muñoz", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Regalado", Amaterno= "Cuadras", Nombre="Administrador", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ADAA220101XXXXXX", SeguridadSocial="1254ddfg5",
+                        Telefono="6671223344", Celular="6672334455", Rfc="ADAA2201015R7", Categoria=1, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=1,
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"),Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Muñoz", Amaterno= "Jimenez", Nombre="Federico", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="ROJF931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="6671223344", Celular="6672334455", Rfc="ROJF931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=2,
-                        Estatus="V", Usuario="FRojas", Contraseña="123", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 11},
-            new Empleado {Apaterno="Lerma", Amaterno= "Sainz", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5", 
+                        EstatusId="V", UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1},
+            new Empleado {Apaterno="Lerma", Amaterno= "Sainz", Nombre="Prueba", FechaNacimiento=DateTime.Parse("2005-09-01"), Curp="PRPP931201XXXXXX", SeguridadSocial="1254ddfg5",
                         Telefono="1234567890", Celular="1234567890", Rfc="PRPP931201A91", Categoria=2, TipoSangre=2, FechaIngreso=DateTime.Parse("2022-04-16"), DepartamentoId=3,
-                        Estatus="V", Usuario="FPrueba", Contraseña="123", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), DomicilioId = 12}
+                        EstatusId="V", UserRegistro="Prueba", FechaRegistro=DateTime.Parse("2022-04-16"), Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01", SucursalId = 1}
         };
 
         foreach (Empleado e in Empleados)
@@ -254,28 +226,20 @@ public static class DbInitializer
             context.Empleados.Add(e);
         }
 
-        var Domicilios = new Domicilio[]
+        context.SaveChanges();
+
+        var Roles = new Roles[]
         {
-            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
-            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
-            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
-            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Prueba", NoExt="58", NoInt="B", Colonia="1", PoblacionId="0001", MunicipioId="001", EstadoId="01" },
-            new Domicilio { Calle="Rolando Arjona", NoExt="1546", NoInt="", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  },
-            new Domicilio { Calle="Probando", NoExt="123", NoInt="4", Colonia="9", PoblacionId="0001", MunicipioId="001", EstadoId="01"  }
+            new Roles { EmpleadoId = 1, RolId = 1, Rol = 1, EstatusId = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16") },
+            new Roles { EmpleadoId = 1, RolId = 2, Rol = 2, EstatusId = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16") },
+            new Roles { EmpleadoId = 2, RolId = 1, Rol = 2, EstatusId = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16") },
+            new Roles { EmpleadoId = 3, RolId = 2, Rol = 3, EstatusId = "V", FechaEstatus = DateTime.Parse("2022-04-16"), UserRegistro="Admin", FechaRegistro=DateTime.Parse("2022-04-16") }
         };
 
-        foreach (Domicilio d in Domicilios)
+        foreach (Roles r in Roles)
         {
-            context.Domicilios.Add(d);
+            context.Roles.Add(r);
         }
-
-
 
         context.SaveChanges();
     }

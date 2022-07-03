@@ -13,4 +13,7 @@ global using SysSara.Models.Dtos;
 global using SysSara.Models.Cat;
 global using SysSara.Data;
 global using SysSara.Services;
-global using SysSara.Services.Interfaces;
+//global using SysSara.Services.Interfaces;
+
+global using AutoMapper;
+global using AutoMapper.QueryableExtensions;

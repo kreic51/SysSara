@@ -10,6 +10,7 @@ public class EmpleadosListDto
     public string? Amaterno { get; set; }
     [Display(Name = "Nombre(s)")]
     public string? Nombre { get; set; }
+    [Display(Name = "Estatus")]
     public string? Estatus { get; set; }
     [Display(Name = "Departamento")]
     public string? Descripcion { get; set; }

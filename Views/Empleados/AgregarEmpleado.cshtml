@@ -1,0 +1,265 @@
+﻿@model SysSara.Models.Dtos.EmpleadoDto
+
+@{
+    ViewData["Title"] = "Nuevo Empleados";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            @if(Model.EmpleadoId == 0)
+            {
+                <div class="col-sm-6">
+                    <h1 class="m-0">Nuevo Empleado</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+                        <li class="breadcrumb-item "><a asp-action="ListaEmpleados">Empleados</a></li>
+                        <li class="breadcrumb-item active">Nuevo</li>                    
+                    </ol>
+                </div>            
+            }
+            else
+            {
+                <div class="col-sm-6">
+                    <h1 class="m-0">Actualizar Empleado</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+                        <li class="breadcrumb-item "><a asp-action="ListaEmpleados">Empleados</a></li>
+                        <li class="breadcrumb-item active">Actualizar</li>                    
+                    </ol>
+                </div>
+            }                    
+            
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="post" asp-action="AgregarEmpleado" asp-controller="Empleados"
+                      data-ajax="true"
+                      data-ajax-method="POST"
+                      data-ajax-loading="#Loading"
+                      data-ajax-success="OnSuccess">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="EmpleadoId" class="form-control form-control-sm" hidden="hidden"/>
+                    <div class="card card-orange card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Generales</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Apaterno" class="control-label"></label>
+                                    <input asp-for="Apaterno" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Apaterno" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Amaterno" class="control-label"></label>
+                                    <input asp-for="Amaterno" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Amaterno" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label asp-for="Nombre" class="control-label"></label>
+                                    <input asp-for="Nombre" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="FechaNacimiento" class="control-label"></label>
+                                    <input asp-for="FechaNacimiento" class="form-control form-control-sm" />
+                                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="Curp" class="control-label"></label>
+                                    <input asp-for="Curp" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Curp" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="SeguridadSocial" class="control-label"></label>
+                                    <input asp-for="SeguridadSocial" class="form-control form-control-sm" />
+                                    <span asp-validation-for="SeguridadSocial" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="Telefono" class="control-label"></label>
+                                    <input asp-for="Telefono" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="Celular" class="control-label"></label>
+                                    <input asp-for="Celular" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Celular" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="Rfc" class="control-label"></label>
+                                    <input asp-for="Rfc" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Rfc" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="Categoria" class="control-label"></label>
+                                    <input asp-for="Categoria" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="TipoSangre" class="control-label"></label>
+                                    <select asp-for="TipoSangre" asp-items="Model.TiposSangre" class="form-control form-control-sm"></select>
+                                    <span asp-validation-for="TipoSangre" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="FechaIngreso" class="control-label"></label>
+                                    <input asp-for="FechaIngreso" class="form-control form-control-sm" />
+                                    <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="EstatusId" class="control-label"></label>
+                                    <select asp-for="EstatusId" asp-items="Model.Estatuses" class="form-control form-control-sm "></select>
+                                    <span asp-validation-for="EstatusId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="DepartamentoId" class="control-label"></label>
+                                    <select asp-for="DepartamentoId" asp-items="Model.Departamentos" class="form-control form-control-sm "></select>
+                                    <span asp-validation-for="DepartamentoId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="SucursalId" class="control-label"></label>
+                                    <select asp-for="SucursalId" asp-items="Model.Sucursales" class="form-control form-control-sm "></select>
+                                    <span asp-validation-for="SucursalId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card card-orange card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Domicilio</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-8">
+                                    <label asp-for="Calle" class="control-label"></label>
+                                    <input asp-for="Calle" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Calle" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="NoExt" class="control-label"></label>
+                                    <input asp-for="NoExt" class="form-control form-control-sm" />
+                                    <span asp-validation-for="NoExt" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label asp-for="NoInt" class="control-label"></label>
+                                    <input asp-for="NoInt" class="form-control form-control-sm" />
+                                    <span asp-validation-for="NoInt" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="EstadoId" class="control-label"></label>
+                                    <select asp-for="EstadoId" asp-items="Model.Estados" class="form-control form-control-sm"></select>
+                                    <span asp-validation-for="EstadoId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="MunicipioId" class="control-label"></label>
+                                    <select asp-for="MunicipioId" asp-items="Model.Municipios" class="form-control form-control-sm"></select>
+                                    <span asp-validation-for="MunicipioId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="PoblacionId" class="control-label"></label>
+                                    <select asp-for="PoblacionId" asp-items="Model.Poblaciones" class="form-control form-control-sm"></select>
+                                    <span asp-validation-for="PoblacionId" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="Colonia" class="control-label"></label>
+                                    <select asp-for="Colonia" asp-items="Model.Colonias" class="form-control form-control-sm"></select>
+                                    <span asp-validation-for="Colonia" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <a asp-action="ListaEmpleados" asp-controller="Empleados" class="btn btn-sm btn-warning">Cancelar</a>
+                            <button class="btn btn-sm btn-info float-right" type="submit">Guardar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="Loading" class="overlay-wrapper" style="display:none;">
+    <div class="overlay dark"><i class="fas fa-3x fa-sync-alt fa-spin"></i></div>                
+</div>
+
+<script>
+
+    var UrlMunicipios = '@Url.Action("GetMunicipios", "Empleados")';
+    var UrlLocalidades = '@Url.Action("GetLocalidades", "Empleados")';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        $('.select2').select2({
+            language: 'es',
+            theme: 'bootstrap4',
+            width: 'auto',
+            minimumResultsForSearch: 10,
+            selectionCssClass: 'form-control form-control-sm',
+        });
+    });
+
+    OnSuccess = async function(data) {
+        console.log(data);
+        switch(data.success){
+            case false:
+                if (data.responseTipo == 100) {
+                    window.location.href = '@Url.Action("Login", "Account")';
+                }
+                else {
+                    MensajeAlerta(data.titulo, data.mensaje, data.icono);
+                }
+                break;
+            case true:
+                await MensajeAlertaAsync(data.titulo, data.mensaje, data.icono);
+                window.location.href = '@Url.Action("ListaEmpleados", "Empleados")';                            
+                break;
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const DEstado = document.getElementById('EstadoId');
+        const DMunicipio = document.getElementById('MunicipioId');
+        const DLocalidad = document.getElementById('PoblacionId');
+        const DColonia = document.getElementById('Colonia');
+
+        $(DEstado).on('change', function (e) {
+            fillChildCombo(DMunicipio, UrlMunicipios, { estado: DEstado.value }, true);
+        });
+
+        $(DMunicipio).on('change', function (e) {
+            fillChildCombo(DLocalidad, UrlLocalidades, { estado: DEstado.value, municipio: DMunicipio.value });
+            fillChildCombo(DColonia, UrlLocalidades, { estado: DEstado.value, municipio: DMunicipio.value });
+        });    
+    });
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
