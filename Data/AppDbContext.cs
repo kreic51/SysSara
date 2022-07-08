@@ -12,7 +12,7 @@ public class AppDbContext : DbContext
     public DbSet<Departamento>? Departamentos { get; set; }
     public DbSet<Estado>? Estados { get; set; }
     public DbSet<Municipio>? Municipios { get; set; }
-    public DbSet<Poblacion>? Poblaciones { get; set; }
+    public DbSet<Colonia>? Colonias { get; set; }
     public DbSet<Tiposangre>? Tiposangres { get; set; }
     public DbSet<Estatus>? Estatus { get; set; }
     public DbSet<Sucursal>? Sucursales { get; set; }

@@ -32,6 +32,7 @@ using (var scope = app.Services.CreateScope())
     {
         var context = services.GetRequiredService<AppDbContext>();
         DbInitializer.Initialize(context);
+        DbInitializerColonias.Initialize(context);
     }
     catch (Exception ex)
     {

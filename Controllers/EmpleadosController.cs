@@ -106,7 +106,7 @@ public class EmpleadosController : Controller
 
         try
         {
-            resultado = await unitOfWork.Catalogos.GetMunicipios(estado);
+            resultado = await unitOfWork.Catalogos.GetSelectListMunicipios(estado);
         }
         catch (Exception ex)
         {
@@ -117,13 +117,13 @@ public class EmpleadosController : Controller
     }
 
     [HttpGet]
-    public async Task<JsonResult> GetLocalidades(string estado, string municipio)
+    public async Task<JsonResult> GetColonias(string estado, string municipio)
     {
         SelectList resultado;
 
         try
         {
-            resultado = await unitOfWork.Catalogos.GetPoblaciones(estado, municipio);
+            resultado = await unitOfWork.Catalogos.GetSelectListColonias(estado, municipio);
         }
         catch (Exception ex)
         {

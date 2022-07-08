@@ -15,10 +15,12 @@ public interface IEmpleadosRepository : IGenericRepository<Empleado>
 public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosRepository
 {
     private readonly IMapper mapper;
+    private readonly ICatalogosRepository catalogosRepository;
 
-    public EmpleadosRepository(AppDbContext context, IMapper mapper) : base(context)
+    public EmpleadosRepository(AppDbContext context, IMapper mapper, ICatalogosRepository catalogosRepository) : base(context)
     {
         this.mapper = mapper;
+        this.catalogosRepository = catalogosRepository;
     }
 
     public async Task<IEnumerable<Empleado>> GetAllWhitRelation()
@@ -85,12 +87,19 @@ public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosReposi
     {
         try
         {
-            empleado.Departamentos = new SelectList(await _context.Departamentos.ToListAsync(), "DepartamentoId", "Descripcion");
-            empleado.TiposSangre = new SelectList(await _context.Tiposangres.ToListAsync(), "SangreId", "Descripcion");
-            empleado.Estados = new SelectList(await _context.Estados.ToListAsync(), "Cve_est", "Descripcion", "25");
-            empleado.Municipios = new SelectList(await _context.Municipios.Where(m => m.Cve_est == "25").ToListAsync(), "Cve_mun", "Descripcion", "006");
-            empleado.Poblaciones = new SelectList(await _context.Poblaciones.Where(p => p.Cve_est == "25" && p.Cve_mun == "006").OrderBy(x => x.Descripcion).ToListAsync(), "Cve_pob", "Descripcion", "0001");
-            empleado.Colonias = new SelectList(await _context.Poblaciones.Where(p => p.Cve_est == "25" && p.Cve_mun == "006").OrderBy(x => x.Descripcion).ToListAsync(), "Cve_pob", "Descripcion", "0001");
+            //empleado.Departamentos = new SelectList(await _context.Departamentos.ToListAsync(), "DepartamentoId", "Descripcion");
+            //empleado.TiposSangre = new SelectList(await _context.Tiposangres.ToListAsync(), "SangreId", "Descripcion");
+            //empleado.Estados = new SelectList(await _context.Estados.ToListAsync(), "Cve_est", "Descripcion", "25");
+            //empleado.Municipios = new SelectList(await _context.Municipios.Where(m => m.Cve_est == "25").ToListAsync(), "Cve_mun", "Descripcion", "006");            
+            //empleado.Colonias = new SelectList(await _context.Colonias.Where(p => p.Cve_est == "25" && p.Cve_mun == "006").OrderBy(x => x.Descripcion).ToListAsync(), "Cve_col", "Descripcion", "0001");
+            //empleado.Estatuses = new SelectList(await _context.Estatus.ToListAsync(), "EstatusId", "Descripcion", "V");
+            //empleado.Sucursales = new SelectList(await _context.Sucursales.ToListAsync(), "SucursalId", "Nombre");
+
+            empleado.Departamentos = new SelectList(await catalogosRepository.GetListDepartamentos(), "DepartamentoId", "Descripcion");
+            empleado.TiposSangre = new SelectList(await catalogosRepository.GetListTiposangres(), "SangreId", "Descripcion");
+            empleado.Estados = new SelectList(await catalogosRepository.GetListEstados(), "Cve_est", "Descripcion", "25");
+            empleado.Municipios = await catalogosRepository.GetSelectListMunicipios();
+            empleado.Colonias = await catalogosRepository.GetSelectListColonias();
             empleado.Estatuses = new SelectList(await _context.Estatus.ToListAsync(), "EstatusId", "Descripcion", "V");
             empleado.Sucursales = new SelectList(await _context.Sucursales.ToListAsync(), "SucursalId", "Nombre");
         }

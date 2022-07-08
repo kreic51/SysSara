@@ -11,16 +11,16 @@ public interface ICatalogosRepository
     Task<Municipio> GetMunicipio(string estado, string municipio);
     Task<IEnumerable<Municipio>> GetListMunicipios(string estado);
 
-    Task<Poblacion> GetPoblacion(string estado, string municipio, string poblacion);
-    Task<IEnumerable<Poblacion>> GetListPoblaciones(string estado, string municipio);
+    Task<Colonia> GetColonia(string estado, string municipio, string colonia);
+    Task<IEnumerable<Colonia>> GetListColonias(string estado, string municipio);
 
     Task<Rol> GetRol(int id);
     Task<IEnumerable<Rol>> GetListRol();
 
     Task<Tiposangre> GetTiposangre(int id);
     Task<IEnumerable<Tiposangre>> GetListTiposangres();
-    Task<SelectList> GetMunicipios(string estado = "25");
-    Task<SelectList> GetPoblaciones(string estado = "25", string municipio = "006");
+    Task<SelectList> GetSelectListMunicipios(string estado = "25");
+    Task<SelectList> GetSelectListColonias(string estado = "25", string municipio = "006");
 }
 
 public class CatalogosRepository : ICatalogosRepository
@@ -30,117 +30,153 @@ public class CatalogosRepository : ICatalogosRepository
     public CatalogosRepository(AppDbContext context)
     {
         _context = context;    
-    }    
+    }
 
     public async Task<Departamento> GetDepartamento(int id)
     {
-        try{
+        try
+        {
             return await _context.Departamentos.Where(x => x.DepartamentoId == id).FirstOrDefaultAsync();
-        }catch{
-            throw;
         }
-    }
-
-    public async Task<Estado> GetEstado(string estado)
-    {
-        try{
-            return await _context.Estados.Where(x => x.Cve_est == estado).FirstOrDefaultAsync();
-        }catch{
+        catch
+        {
             throw;
         }
     }
 
     public async Task<IEnumerable<Departamento>> GetListDepartamentos()
     {
-        try{
+        try
+        {
             return await _context.Departamentos.ToListAsync();
-        }catch{
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<Estado> GetEstado(string estado)
+    {
+        try
+        {
+            return await _context.Estados.Where(x => x.Cve_est == estado).FirstOrDefaultAsync();
+        }
+        catch
+        {
             throw;
         }
     }
 
     public async Task<IEnumerable<Estado>> GetListEstados()
     {
-        try{
+        try
+        {
             return await _context.Estados.ToListAsync();
-        }catch{
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<Municipio> GetMunicipio(string estado, string municipio)
+    {
+        try
+        {
+            return await _context.Municipios.FirstOrDefaultAsync(x => x.Cve_est == estado && x.Cve_mun == municipio);
+        }
+        catch
+        {
             throw;
         }
     }
 
     public async Task<IEnumerable<Municipio>> GetListMunicipios(string estado)
     {
-        try{
-            return await _context.Municipios.Where(x => x.Cve_est == estado).ToListAsync();
-        }catch{
+        try
+        {
+            return await _context.Municipios.Where(x => x.Cve_est == estado).OrderBy(x => x.Descripcion).ToListAsync();
+        }
+        catch
+        {
             throw;
         }
     }
 
-    public async Task<IEnumerable<Poblacion>> GetListPoblaciones(string estado, string municipio)
+    public async Task<Colonia> GetColonia(string estado, string municipio, string colonia)
     {
-        try{
-            return await _context.Poblaciones.Where(x => x.Cve_est == estado && x.Cve_mun == municipio).OrderBy(x => x.Descripcion).ToListAsync();
-        }catch{
+        try
+        {
+            return await _context.Colonias.FirstOrDefaultAsync(x => x.Cve_est == estado && x.Cve_mun == municipio && x.Cve_col == colonia);
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<Colonia>> GetListColonias(string estado, string municipio)
+    {
+        try
+        {
+            return await _context.Colonias.Where(x => x.Cve_est == estado && x.Cve_mun == municipio).OrderBy(x => x.Descripcion).ToListAsync();
+        }
+        catch
+        {
             throw;
         }
     }
 
     public async Task<IEnumerable<Rol>> GetListRol()
     {
-        try{
+        try
+        {
             return await _context.catRoles.ToListAsync();
-        }catch{
-            throw;
         }
-    }
-
-    public async Task<Municipio> GetMunicipio(string estado, string municipio )
-    {
-        try{            
-            return await _context.Municipios.Where(x => x.Cve_est == estado && x.Cve_mun == municipio).FirstOrDefaultAsync();
-        }catch{
-            throw;
-        }
-    }
-
-    public async Task<Poblacion> GetPoblacion(string estado, string municipio, string poblacion)
-    {
-        try{
-            return await _context.Poblaciones.Where(x => x.Cve_est == estado && x.Cve_mun == municipio && x.Cve_pob == poblacion).FirstOrDefaultAsync();
-        }catch{
+        catch
+        {
             throw;
         }
     }
 
     public async Task<Rol> GetRol(int id)
     {
-        try{
+        try
+        {
             return await _context.catRoles.Where(x => x.RolId == id).FirstOrDefaultAsync();
-        }catch{
+        }
+        catch
+        {
             throw;
         }
     }
 
     public async Task<Tiposangre> GetTiposangre(int id)
     {
-        try{
+        try
+        {
             return await _context.Tiposangres.Where(x => x.SangreId == id).FirstOrDefaultAsync();
-        }catch{
+        }
+        catch
+        {
             throw;
         }
     }
 
     public async Task<IEnumerable<Tiposangre>> GetListTiposangres()
     {
-        try{
+        try
+        {
             return await _context.Tiposangres.ToListAsync();
-        }catch{
+        }
+        catch
+        {
             throw;
         }
     }
 
-    public async Task<SelectList> GetMunicipios(string estado = "25")
+    public async Task<SelectList> GetSelectListMunicipios(string estado = "25")
     {
         var list = await _context.Municipios.Where(x => x.Cve_est == estado).ToListAsync();
 
@@ -156,19 +192,19 @@ public class CatalogosRepository : ICatalogosRepository
         return new SelectList(list, "Cve_mun", "Descripcion");
     }
 
-    public async Task<SelectList> GetPoblaciones(string estado = "25", string municipio = "006")
+    public async Task<SelectList> GetSelectListColonias(string estado = "25", string municipio = "006")
     {
-        var list = await _context.Poblaciones.Where(x => x.Cve_est == estado && x.Cve_mun == municipio).ToListAsync();
+        var list = await _context.Colonias.Where(x => x.Cve_est == estado && x.Cve_mun == municipio).ToListAsync();
 
         if (list.Count == 0)
         {
-            list.Add(new Poblacion
+            list.Add(new Colonia
             {
-                Cve_pob = "0000",
+                Cve_col = "0000",
                 Descripcion = "SIN INFORMACION"
             });
         }
 
-        return new SelectList(list, "Cve_pob", "Descripcion");
+        return new SelectList(list, "Cve_col", "Descripcion");
     }
 }

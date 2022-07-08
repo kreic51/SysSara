@@ -32,9 +32,8 @@ public class EmpleadoDto
     public string? NoExt { get; set; }
     [Display(Name = "No. Interior")]
     public string? NoInt { get; set; }
-    public string? Colonia { get; set; }
-    [Display(Name = "Poblacion")]
-    public string? PoblacionId { get; set; }
+    [Display(Name = "Colonia")]
+    public string? ColoniaId { get; set; }    
     [Display(Name = "Municipio")]
     public string? MunicipioId { get; set; }
     [Display(Name = "Estado")]
@@ -49,8 +48,7 @@ public class EmpleadoDto
     public SelectList? TiposSangre { get; set; }
     public SelectList? Departamentos { get; set; }
     public SelectList? Estados { get; set; }
-    public SelectList? Municipios { get; set; }
-    public SelectList? Poblaciones { get; set; }
+    public SelectList? Municipios { get; set; }    
     public SelectList? Colonias { get; set; }
     public SelectList? Estatuses { get; set; }
     public SelectList? Sucursales { get; set; }

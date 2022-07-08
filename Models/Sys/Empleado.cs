@@ -19,8 +19,7 @@ public class Empleado
     public string? Calle { get; set; }
     public string? NoExt { get; set; }
     public string? NoInt { get; set; }
-    public string? Colonia { get; set; }
-    public string? PoblacionId { get; set; }
+    public string? ColoniaId { get; set; }    
     public string? MunicipioId { get; set; }
     public string? EstadoId { get; set; }
     public DateTime? FechaIngreso { get; set; } = DateTime.Now;
