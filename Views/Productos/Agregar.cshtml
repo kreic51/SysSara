@@ -1,0 +1,140 @@
+﻿@model SysSara.Models.Dtos.ProductoDto
+
+@{
+    ViewData["Title"] = "Nuevo Empleados";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            @if(Model.Id == 0)
+            {
+                <div class="col-sm-6">
+                    <h1 class="m-0">Nuevo Producto</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+                        <li class="breadcrumb-item ">Catalogos</li>
+                        <li class="breadcrumb-item "><a asp-action="Listado" asp-controller="Productos">Productos</a></li>
+                        <li class="breadcrumb-item active">Nuevo</li>                    
+                    </ol>
+                </div>            
+            }
+            else
+            {
+                <div class="col-sm-6">
+                    <h1 class="m-0">Actualizar Producto</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
+                        <li class="breadcrumb-item ">Catalogos</li>
+                        <li class="breadcrumb-item "><a asp-action="Listado" asp-controller="Productos">Productos</a></li>
+                        <li class="breadcrumb-item active">Actualizar</li>                    
+                    </ol>
+                </div>
+            }                    
+            
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <form method="post" asp-action="Agregar" asp-controller="Productos"
+                      data-ajax="true"
+                      data-ajax-method="POST"
+                      data-ajax-loading="#Loading"
+                      data-ajax-success="OnSuccessProductos">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="Id" class="form-control form-control-sm" hidden="hidden"/>
+                    <div class="card card-orange card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">Caracteristicas del Producto</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="CodigoBarras" class="control-label"></label>
+                                    <input asp-for="CodigoBarras" class="form-control form-control-sm" />
+                                    <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="Categoria" class="control-label"></label>
+                                    <input asp-for="Categoria" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="Nombre" class="control-label"></label>
+                                    <input asp-for="Nombre" class="form-control form-control-sm" />
+                                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                                </div>                            
+                                <div class="form-group col-sm-3">
+                                    <label asp-for="EstatusId" class="control-label"></label>
+                                    <select asp-for="EstatusId" asp-items="Model.Estatuses" class="form-control form-control-sm "></select>
+                                    <span asp-validation-for="EstatusId" class="text-danger"></span>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-footer">
+                            <a asp-action="Listado" asp-controller="Productos" class="btn btn-sm btn-warning">Cancelar</a>
+                            <button class="btn btn-sm btn-info float-right" type="submit">Guardar</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="Loading" class="overlay-wrapper" style="display:none;">
+    <div class="overlay dark"><i class="fas fa-3x fa-sync-alt fa-spin"></i></div>                
+</div>
+
+<script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        $('.select2').select2({
+            language: 'es',
+            theme: 'bootstrap4',
+            width: 'auto',
+            minimumResultsForSearch: 10,
+            selectionCssClass: 'form-control form-control-sm',
+        });
+    });
+
+    OnSuccessProductos = async function(data) {
+        
+        switch(data.success){
+            case false:
+                if (data.responseTipo == 100) {
+                    window.location.href = '@Url.Action("Login", "Account")';
+                }
+                else {
+                    MensajeAlerta(data.titulo, data.mensaje, data.icono);
+                }
+                break;
+            case true:
+                await MensajeAlertaAsync(data.titulo, data.mensaje, data.icono);
+                window.location.href = '@Url.Action("Listado", "Productos")';                            
+                break;
+        }
+    };    
+
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

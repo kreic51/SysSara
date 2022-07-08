@@ -16,6 +16,7 @@ public class AppDbContext : DbContext
     public DbSet<Tiposangre>? Tiposangres { get; set; }
     public DbSet<Estatus>? Estatus { get; set; }
     public DbSet<Sucursal>? Sucursales { get; set; }
+    public DbSet<Producto>? Productos { get; set; }
 
     /* protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

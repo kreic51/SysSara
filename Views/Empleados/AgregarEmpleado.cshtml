@@ -184,7 +184,7 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-footer">
                             <a asp-action="ListaEmpleados" asp-controller="Empleados" class="btn btn-sm btn-warning">Cancelar</a>
                             <button class="btn btn-sm btn-info float-right" type="submit">Guardar</button>
                         </div>
@@ -215,6 +215,19 @@
             minimumResultsForSearch: 10,
             selectionCssClass: 'form-control form-control-sm',
         });
+
+        const DEstado = document.getElementById('EstadoId');
+        const DMunicipio = document.getElementById('MunicipioId');
+        const DLocalidad = document.getElementById('PoblacionId');
+        const DColonia = document.getElementById('ColoniaId');
+
+        $(DEstado).on('change', function (e) {
+            fillChildCombo(DMunicipio, UrlMunicipios, { estado: DEstado.value }, true);
+        });
+
+        $(DMunicipio).on('change', function (e) {            
+            fillChildCombo(DColonia, UrlColonias, { estado: DEstado.value, municipio: DMunicipio.value });
+        });  
     });
 
     OnSuccess = async function(data) {
@@ -235,20 +248,20 @@
         }
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const DEstado = document.getElementById('EstadoId');
-        const DMunicipio = document.getElementById('MunicipioId');
-        const DLocalidad = document.getElementById('PoblacionId');
-        const DColonia = document.getElementById('ColoniaId');
+    //document.addEventListener('DOMContentLoaded', () => {
+    //    const DEstado = document.getElementById('EstadoId');
+    //    const DMunicipio = document.getElementById('MunicipioId');
+    //    const DLocalidad = document.getElementById('PoblacionId');
+    //    const DColonia = document.getElementById('ColoniaId');
 
-        $(DEstado).on('change', function (e) {
-            fillChildCombo(DMunicipio, UrlMunicipios, { estado: DEstado.value }, true);
-        });
+    //    $(DEstado).on('change', function (e) {
+    //        fillChildCombo(DMunicipio, UrlMunicipios, { estado: DEstado.value }, true);
+    //    });
 
-        $(DMunicipio).on('change', function (e) {            
-            fillChildCombo(DColonia, UrlColonias, { estado: DEstado.value, municipio: DMunicipio.value });
-        });    
-    });
+    //    $(DMunicipio).on('change', function (e) {            
+    //        fillChildCombo(DColonia, UrlColonias, { estado: DEstado.value, municipio: DMunicipio.value });
+    //    });    
+    //});
 
 </script>
 

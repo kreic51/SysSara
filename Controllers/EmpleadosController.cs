@@ -93,7 +93,7 @@ public class EmpleadosController : Controller
         }
         catch (Exception ex)
         {
-            return Json(new { success = false, titulo = "Agregar Empleado", mensaje = ex.Message, icono = IconError.Info });
+            return Json(new { success = false, titulo = "Eliminar Empleado", mensaje = ex.Message, icono = IconError.Info });
         }
 
         return Json(new { success = true, titulo = "Eliminar Empleado", mensaje = "Se eliminó el Empleado correctamente", icono = IconError.Info });

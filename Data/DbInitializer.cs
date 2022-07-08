@@ -4,7 +4,7 @@ public static class DbInitializer
 {
     public static void Initialize(AppDbContext context)
     {
-        context.Database.EnsureDeleted(); //Elimina la bd si existe.
+        //context.Database.EnsureDeleted(); //Elimina la bd si existe.
         context.Database.EnsureCreated(); //Revisa si la bd existe, si no la crea.
 
         // Busca si la tabla empleados tiene algun dato
@@ -238,6 +238,42 @@ public static class DbInitializer
         foreach (Roles r in Roles)
         {
             context.Roles.Add(r);
+        }
+
+        var Productos = new Producto[]
+        {
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "ASIENTOS 250 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "ASIENTOS 1 KG", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "ASIENTOS CUBETA 4 KG", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "ASIENTOS CUBETA 16 KG", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CAJA MANTEQUILLA PRIMAVERA 12 PZ/90 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHICHARRON 200 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHICHARRON GRANEL", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHILORIO 250 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHILORIO BOLSA", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHILORIO GRANEL", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHORIZO BOLSA 250 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHORIZO SARA TIRA 240 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "CHORIZO GRANEL", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "FRIJOL NATURAL 1/2", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "FRIJOL PUERCO 1/2", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "MACHACA 1 KG", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "MANTECA CUBETA 16 KG", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "MANTECA DE CERDO 1/2", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "QUESO CHESTER BARRA 250 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "QUESO CHESTER BARRA 500 GR", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "QUESO CHESTER BARRA 2.5 KG APROX", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "QUESO GOUDA OSORNO BARRA", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "TORTILLA DE HARINA 8 PZ", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "TORTILLA DE HARINA GRANDE", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "BOLIS", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+            new Producto { CodigoBarras = "123456789", Categoria = 1, Nombre = "DIABLITOS", EstatusId = "V", UsuarioId = 1, FechaRegistro=DateTime.Parse("2022-04-16"), FechaEstatus=DateTime.Parse("2022-04-16") },
+
+        };
+
+        foreach (Producto p in Productos)
+        {
+            context.Productos.Add(p);
         }
 
         context.SaveChanges();

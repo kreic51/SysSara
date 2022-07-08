@@ -3,12 +3,14 @@
 public class ProductoDto
 {
     public int Id { get; set; }
+    [Required(ErrorMessage = "Este campo es requedido.")]
+    [Display(Name = "Codigo de Barras")]
     public string? CodigoBarras { get; set; }
     public int Categoria { get; set; }
+    [Required(ErrorMessage = "Este campo es requedido.")]
     public string? Nombre { get; set; }
-    public int Cantidad { get; set; }
-    public int CantidadMinima { get; set; }
-    public string? Estatus { get; set; }
-    public DateTime FechaRegistro { get; set; }
-    public DateTime FechaActivo { get; set; }
+    [Required(ErrorMessage = "Este campo es requedido.")]
+    [Display(Name = "Estatus")]
+    public string? EstatusId { get; set; }
+    public SelectList? Estatuses { get; set; }
 }

@@ -3,7 +3,8 @@ namespace SysSara.Services;
 public interface IUnitOfWork : IDisposable
 {
     ICatalogosRepository Catalogos { get; }
-    IEmpleadosRepository Empleados { get; }    
+    IEmpleadosRepository Empleados { get; }
+    ICatProductosRepository CatProductos { get; }
     Task<int> CompleteAsync();
 }
 
@@ -13,7 +14,8 @@ public class UnitOfWork : IUnitOfWork
     private readonly IMapper mapper;
 
     public ICatalogosRepository Catalogos { get; private set; }
-    public IEmpleadosRepository Empleados { get; private set; }    
+    public IEmpleadosRepository Empleados { get; private set; }
+    public ICatProductosRepository CatProductos { get; private set; }
 
     public UnitOfWork(AppDbContext context, IMapper mapper)
     {
@@ -21,6 +23,7 @@ public class UnitOfWork : IUnitOfWork
         this.mapper = mapper;        
         Catalogos = new CatalogosRepository(_context);
         Empleados = new EmpleadosRepository(_context, mapper, Catalogos);
+        CatProductos = new CatProductosRepository(_context, mapper);
     }
 
     public async Task<int> CompleteAsync()
