@@ -6,6 +6,8 @@ public interface ICatProductosRepository : IGenericRepository<Empleado>
     Task<bool> GrabarActualizar(ProductoDto producto);
     Task<ProductoDto> ObtenerDtoPorId(int id);
     Task<List<ProductosListDto>> ObtenerListadoDto();
+    Task<List<ProductosListDto>> ObtenerListadoDto(string filtro);
+    Task<PaginaResultado<ProductosListDto>> ObtenerListadoPaginadoDto(string filtro, int pagina, int filas);
     Task<Producto> ObtenerPorId(int id);
     Task<ProductoDto> RellenarCatalogos(ProductoDto producto);
 }
@@ -65,6 +67,49 @@ public class CatProductosRepository : ICatProductosRepository
                 .ToListAsync();
 
             return productos;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<List<ProductosListDto>> ObtenerListadoDto(string filtro)
+    {
+        try
+        {
+            List<ProductosListDto> productos = await context.Productos
+                .Include(p => p.Estatus)
+                .Where(p => p.Nombre.Contains(filtro))
+                .ProjectTo<ProductosListDto>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return productos;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<PaginaResultado<ProductosListDto>> ObtenerListadoPaginadoDto(string? filtro, int pagina, int filas)
+    {
+        try
+        {
+            IQueryable<ProductosListDto> productos = context.Productos
+                .Include(p => p.Estatus)
+                .ProjectTo<ProductosListDto>(mapper.ConfigurationProvider)
+                .OrderByDescending(p => p.Id);
+
+            if (!string.IsNullOrEmpty(filtro))
+                productos = productos.Where(p => p.Nombre.Contains(filtro));
+                
+
+            PaginaResultado<ProductosListDto> resultados = new();
+
+            resultados = await productos.ObtenerListadoPaginadoAsync(pagina, filas);
+
+            return resultados;
         }
         catch
         {
@@ -134,4 +179,7 @@ public class CatProductosRepository : ICatProductosRepository
             throw;
         }
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-﻿ @model IEnumerable<SysSara.Models.Dtos.ProductosListDto>
+﻿@model SysSara.Data.PaginaResultado<ProductosListDto>
 
 @{
     ViewData["Title"] = "Productos";
@@ -24,7 +24,7 @@
     
 <div class="content">
   <div class="container-fluid">
-   @* <div class="row">
+    <div class="row">
       <div class="col-lg-12">
         <div class="card card-orange card-outline">          
           <div class="card-body">
@@ -32,55 +32,54 @@
 
             
             <div class="col-sm-6">              
-              <form class="form-inline">
+              <form asp-action="Listado" asp-controller="Productos" class="form-inline" method="get">
                 <div class="form-group">
-                  <label class="control-label">Buscar:</label>                
+                  <label class="control-label">Filtrar:</label>                
                 </div>
-                <div class="form-group mx-sm-3">                
-                  <input class="form-control form-control-sm" id="SearchString" name="SearchString" value="">
+                <div class="form-group col-sm-6">                
+                  <input class="form-control form-control-sm w-100" id="palabraBuscada" name="palabraBuscada" value="@ViewData["Filtro"]">
                 </div>
-                <button type="submit" class="btn btn-sm btn-orange"><i class="fas fa-search"></i></button>                
+                <div class="form-group mx-sm-3">
+                    <button type="submit" class="btn btn-sm btn-orange" data-toggle="tooltip" title="Filtrar"><i class="fas fa-search"></i></button>
+                    <a asp-action="Listado" asp-controller="Productos" class="btn btn-sm btn-orange ml-3" data-toggle="tooltip" title="Quitar Filtro"><i class="fas fa-search-minus"></i></a>
+                </div>
               </form>
+              
             </div>
             <div class="col-sm-6">
-              <a asp-action="AgregarEmpleado" asp-controller="Empleados" asp-route-Id="0" class="btn btn-sm btn-orange float-right"><i class="fas fa-plus"></i> Nuevo</a>
+              <a asp-action="Agregar" asp-controller="Productos" asp-route-Id="0" class="btn btn-sm btn-orange float-right"><i class="fas fa-plus"></i> Nuevo</a>
             </div>
 
             </div>
           </div>
         </div>
       </div>
-    </div>*@
+    </div>
 
     <div class="row">
       <div class="col-lg-12">
         <div class="card card-orange card-outline">
           <div class="card-header">
-            <h3 class="card-title">Listado de Productos</h3>
-            <div class="card-tools">                  
-              <button type="button" class="btn btn-tool" >                
-                <a asp-action="Agregar" asp-controller="Productos" asp-route-Id="0" class="btn btn-sm btn-orange"><i class="fas fa-plus"></i> Nuevo</a>
-              </button>                  
-            </div>
+            <h3 class="card-title">Listado de Productos</h3>            
           </div>
           <div class="card-body p-0 table-responsive">
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Id)</th>
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().CodigoBarras)                    
+                  <th>@Html.DisplayNameFor(model => model.Listado.FirstOrDefault().Id)</th>
+                  <th>@Html.DisplayNameFor(model => model.Listado.FirstOrDefault().CodigoBarras)                    
                     @*<a asp-action="Empleados" asp-route-sortOrder="@ViewBag.APaternoSortParm" ><i class="fas fa-sort"></i></a>*@
                   </th>               
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)                    
+                  <th>@Html.DisplayNameFor(model => model.Listado.FirstOrDefault().Nombre)                    
                     @*<a asp-action="Empleados" asp-route-sortOrder="@ViewBag.AMaternoSortParm" ><i class="fas fa-sort"></i></a>*@
                   </th>                  
-                  <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Estatus)</th>
+                  <th>@Html.DisplayNameFor(model => model.Listado.FirstOrDefault().Estatus)</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                
-                @foreach (var item in Model) {                  
+                @foreach (var item in Model.Listado) {                  
                   <tr>
                     <td>@Html.DisplayFor(modelItem => item.Id)</td>
                     <td>@Html.DisplayFor(modelItem => item.CodigoBarras)</td>                    
@@ -89,9 +88,8 @@
                     <td>
                         <div class="action">
                             <a asp-action="Agregar" asp-controller="Productos" asp-route-id="@item.Id" data-toggle="tooltip" title="Editar"><i class="fas fa-pen"></i></a> |
-                            @* <a asp-action="DetailsEmpleado" asp-route-id="@item.EmpleadoId" data-toggle="tooltip" title="Ver detalles"><i class="fas fa-file-alt"></i></a> | *@
                             <a id="@item.Nombre" asp-action="Eliminar" asp-controller="Productos" asp-route-id="@item.Id" onclick="Eliminar(event)" class="Eliminar" data-toggle="tooltip" title="Eliminar"><i class="fas fa-trash-alt"></i></a>
-                        </div>                      
+                        </div>
                     </td>
                   </tr>
                 }
@@ -104,14 +102,47 @@
     </div>
 
     <div class="row">
-      <div class="col-lg-12">
-       
-      </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+
+                    Pagina <span class="badge badge-orange">@Model.PaginaActual</span> de <span class="badge badge-orange">@Model.TotalPaginas</span>
+
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        <li class="page-item @(!Model.Primero? "disabled":"")">                            
+                            <a class="page-link" asp-action="Listado" asp-controller="Productos" asp-route-palabraBuscada="@ViewData["Filtro"]"  asp-route-Filas="@Model.FilasPagina" asp-route-Pagina="1">
+                                <i class="fas fa-angle-double-left"></i>
+                                <span class="sr-only">First</span>
+                            </a>
+                        </li>
+
+                        @for (int i = Model.PaginaInicial; i <= Model.PaginaFinal; i++)
+                        {
+                            <li class="page-item @(i == Model.PaginaActual ? "active" : "")">                                
+                                <a class="page-link" asp-action="Listado" asp-controller="Productos" asp-route-palabraBuscada="@ViewData["Filtro"]" asp-route-Filas="@Model.FilasPagina" asp-route-Pagina=@i>
+                                    <span aria-hidden="true">@i</span>
+                                    <span class="sr-only">@i</span>
+                                </a>
+                            </li>
+                        }
+
+                        <li class="page-item @(!Model.Ultimo? "disabled":"")">                            
+                            <a class="page-link" asp-action="Listado" asp-controller="Productos" asp-route-palabraBuscada="@ViewData["Filtro"]" asp-route-Filas="@Model.FilasPagina" asp-route-Pagina="@Model.TotalPaginas">
+                                <i class="fas fa-angle-double-right"></i>
+                                <span class="sr-only">Last</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
+
+
   </div>
 </div>
 
-<script>     
+<script type="text/javascript">
 
   async function Eliminar(event){
     event.preventDefault();

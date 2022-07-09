@@ -16,23 +16,32 @@ public class ProductosController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Listado()
+    public async Task<IActionResult> Listado(string? palabraBuscada = null, int Pagina = 1, int Filas = 10)
     {
         ViewBag.MenuActivo = "M5";
         ViewBag.MenuActivoH = "M5H1";
 
-        List<ProductosListDto> productos = new();
+        ViewData["Filtro"] = palabraBuscada;
+                
+        PaginaResultado<ProductosListDto> paginaResultado = new();
 
         try
         {
-            productos = await unitOfWork.CatProductos.ObtenerListadoDto();
+            if (!string.IsNullOrEmpty(palabraBuscada))
+            {
+                paginaResultado = await unitOfWork.CatProductos.ObtenerListadoPaginadoDto(palabraBuscada, Pagina, Filas);
+            }
+            else
+            {
+                paginaResultado = await unitOfWork.CatProductos.ObtenerListadoPaginadoDto(palabraBuscada, Pagina, Filas);
+            }
         }
         catch (Exception ex)
         {
             ViewData["Mensaje"] = new MensajeDto(true, "Error", ex.Message, IconError.Error);
         }
 
-        return View(productos);
+        return View(paginaResultado);
     }
 
     [HttpGet]
