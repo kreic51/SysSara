@@ -41,9 +41,11 @@ public class EmpleadoDto
     [Display(Name = "Fecha Ingreso")]
     [DataType(DataType.Date)]
     public DateTime? FechaIngreso { get; set; } = DateTime.Now;
+    [Display(Name = "Estatus")]
     public string? EstatusId { get; set; }
     public string? UserRegistro { get; set; }
     public DateTime? FechaRegistro { get; set; }
+    public string? Foto { get; set; }
 
     public SelectList? TiposSangre { get; set; }
     public SelectList? Departamentos { get; set; }

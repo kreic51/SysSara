@@ -1,6 +1,6 @@
 ﻿namespace SysSara.Models.Dtos;
 
-public class ProductoDto
+public class ProductoPruebaDto
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Este campo es requedido.")]
@@ -12,5 +12,6 @@ public class ProductoDto
     [Required(ErrorMessage = "Este campo es requedido.")]
     [Display(Name = "Estatus")]
     public string? EstatusId { get; set; }
+    public string? UsuarioId { get; set; }
     public SelectList? Estatuses { get; set; }
 }

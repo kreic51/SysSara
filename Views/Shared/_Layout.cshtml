@@ -60,13 +60,13 @@
         }else{        
           <li class="nav-item dropdown user-menu">
             <a class="nav-link" data-toggle="dropdown" href="#">
-              <span class="d-none d-md-inline mr-2">@User.FindFirst("Username").Value</span>            
-                <img src='~/lib/AdminLTE/img/@User.FindFirst("Foto").Value' class="user-image img-circle elevation-2" alt="User Image">
+              <span class="d-none d-md-inline mr-2">@User.FindFirst("UsuarioId").Value</span>            
+                <img src='~/img/@User.FindFirst("Foto").Value' class="user-image img-circle elevation-2" alt="User Image">
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               <div class="m-3">
                   <div class="text-center">
-                    <img class="profile-user-img img-fluid img-circle" src='~/lib/AdminLTE/img/@User.FindFirst("Foto").Value' alt="User profile picture">
+                    <img class="profile-user-img img-fluid img-circle" src='~/img/@User.FindFirst("Foto").Value' alt="User profile picture">
                   </div>
                   <h3 class="profile-username text-center">@User.Identity.Name</h3>
                   <p class="text-muted text-center">@User.FindFirst("Departamento").Value</p>

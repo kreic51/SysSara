@@ -1,5 +1,6 @@
 ﻿namespace SysSara.Controllers;
 
+[Authorize]
 public class EmpleadosController : Controller
 {
     private readonly ILogger<EmpleadosController> logger;
@@ -14,18 +15,20 @@ public class EmpleadosController : Controller
         this.unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
-
+        
     [HttpGet]
-    public async Task<IActionResult> ListaEmpleados()
+    public async Task<IActionResult> ListadoEmpleados(string? palabraBuscada = null, int Pagina = 1, int Filas = 10)
     {
         ViewBag.MenuActivo = "M4";
         ViewBag.MenuActivoH = "M4H1";
 
-        List<EmpleadosListDto> lEmpleados = new();
+        ViewData["Filtro"] = palabraBuscada;
+
+        PaginaResultado<EmpleadosListDto> lEmpleados = new();
 
         try
         {
-            lEmpleados = await unitOfWork.Empleados.ObtenerTodosListDto();
+            lEmpleados = await unitOfWork.Empleados.ObtenerListadoPaginadoDto(palabraBuscada, Pagina, Filas);
         }
         catch (Exception ex)
         {
@@ -46,7 +49,7 @@ public class EmpleadosController : Controller
         try
         {
             if(Id != 0)
-            {
+            {                
                 empleado = await unitOfWork.Empleados.ObtenerEmpleadoDto(Id);
             }
             empleado = await unitOfWork.Empleados.RellenarCatalogos(empleado);
@@ -70,7 +73,7 @@ public class EmpleadosController : Controller
 
         try
         {
-            empleado.UserRegistro = "Admin";
+            empleado.UserRegistro = User.Claims.FirstOrDefault(c => c.Type == "UsuarioId").Value;
             empleado.FechaRegistro = DateTime.Now;
             await unitOfWork.Empleados.GrabarActualizarEmpleado(empleado);
             await unitOfWork.CompleteAsync();

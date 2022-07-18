@@ -15,7 +15,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
-                        <li class="breadcrumb-item "><a asp-action="ListaEmpleados">Empleados</a></li>
+                        <li class="breadcrumb-item "><a asp-action="ListadoEmpleados" asp-controller="Empleados">Empleados</a></li>
                         <li class="breadcrumb-item active">Nuevo</li>                    
                     </ol>
                 </div>            
@@ -28,7 +28,7 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Home">Inicio</a></li>
-                        <li class="breadcrumb-item "><a asp-action="ListaEmpleados">Empleados</a></li>
+                        <li class="breadcrumb-item "><a asp-action="ListadoEmpleados" asp-controller="Empleados">Empleados</a></li>
                         <li class="breadcrumb-item active">Actualizar</li>                    
                     </ol>
                 </div>
@@ -185,7 +185,7 @@
 
                     <div class="card">
                         <div class="card-footer">
-                            <a asp-action="ListaEmpleados" asp-controller="Empleados" class="btn btn-sm btn-warning">Cancelar</a>
+                            <a asp-action="ListadoEmpleados" asp-controller="Empleados" class="btn btn-sm btn-warning">Cancelar</a>
                             <button class="btn btn-sm btn-info float-right" type="submit">Guardar</button>
                         </div>
                     </div>
@@ -243,7 +243,7 @@
                 break;
             case true:
                 await MensajeAlertaAsync(data.titulo, data.mensaje, data.icono);
-                window.location.href = '@Url.Action("ListaEmpleados", "Empleados")';                            
+                window.location.href = '@Url.Action("ListadoEmpleados", "Empleados")';                            
                 break;
         }
     };

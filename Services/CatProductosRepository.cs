@@ -3,36 +3,37 @@
 public interface ICatProductosRepository : IGenericRepository<Empleado>
 {
     Task<bool> Eliminar(int id);
-    Task<bool> GrabarActualizar(ProductoDto producto);
-    Task<ProductoDto> ObtenerDtoPorId(int id);
-    Task<List<ProductosListDto>> ObtenerListadoDto();
-    Task<List<ProductosListDto>> ObtenerListadoDto(string filtro);
-    Task<PaginaResultado<ProductosListDto>> ObtenerListadoPaginadoDto(string filtro, int pagina, int filas);
-    Task<Producto> ObtenerPorId(int id);
-    Task<ProductoDto> RellenarCatalogos(ProductoDto producto);
+    Task<bool> GrabarActualizar(ProductoPruebaDto producto);
+    Task<ProductoPruebaDto> ObtenerDtoPorId(int id);
+    Task<List<ProductosPruebaListDto>> ObtenerListadoDto();
+    Task<List<ProductosPruebaListDto>> ObtenerListadoDto(string filtro);
+    Task<PaginaResultado<ProductosPruebaListDto>> ObtenerListadoPaginadoDto(string filtro, int pagina, int filas);
+    Task<ProductoPrueba> ObtenerPorId(int id);
+    Task<ProductoPruebaDto> RellenarCatalogos(ProductoPruebaDto producto);
 }
 
 public class CatProductosRepository : ICatProductosRepository
 {
     private readonly AppDbContext context;
     private readonly IMapper mapper;
+    
 
     public CatProductosRepository(AppDbContext context, IMapper mapper) 
     {
         this.context = context;
-        this.mapper = mapper;
+        this.mapper = mapper;        
     }
 
-    public async Task<Producto> ObtenerPorId(int id)
+    public async Task<ProductoPrueba> ObtenerPorId(int id)
     {
         if (id == 0)
-            return new Producto();
+            return new ProductoPrueba();
 
-        Producto? prod;
+        ProductoPrueba? prod;
 
         try
         {
-            prod = await context.Productos.FirstOrDefaultAsync(p => p.Id == id);
+            prod = await context.ProductosPrueba.FirstOrDefaultAsync(p => p.Id == id);
             return prod;
         }
         catch
@@ -41,12 +42,12 @@ public class CatProductosRepository : ICatProductosRepository
         }        
     }
 
-    public async Task<ProductoDto> ObtenerDtoPorId(int id)
+    public async Task<ProductoPruebaDto> ObtenerDtoPorId(int id)
     {
         try
         {
-            ProductoDto? prod = await context.Productos
-                .ProjectTo<ProductoDto>(mapper.ConfigurationProvider)                
+            ProductoPruebaDto? prod = await context.ProductosPrueba
+                .ProjectTo<ProductoPruebaDto>(mapper.ConfigurationProvider)                
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             return prod;
@@ -57,13 +58,13 @@ public class CatProductosRepository : ICatProductosRepository
         }
     }
 
-    public async Task<List<ProductosListDto>> ObtenerListadoDto()
+    public async Task<List<ProductosPruebaListDto>> ObtenerListadoDto()
     {
         try
         {
-            List<ProductosListDto> productos = await context.Productos
+            List<ProductosPruebaListDto> productos = await context.ProductosPrueba
                 .Include(p => p.Estatus)
-                .ProjectTo<ProductosListDto>(mapper.ConfigurationProvider)
+                .ProjectTo<ProductosPruebaListDto>(mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return productos;
@@ -74,14 +75,14 @@ public class CatProductosRepository : ICatProductosRepository
         }
     }
 
-    public async Task<List<ProductosListDto>> ObtenerListadoDto(string filtro)
+    public async Task<List<ProductosPruebaListDto>> ObtenerListadoDto(string filtro)
     {
         try
         {
-            List<ProductosListDto> productos = await context.Productos
+            List<ProductosPruebaListDto> productos = await context.ProductosPrueba
                 .Include(p => p.Estatus)
                 .Where(p => p.Nombre.Contains(filtro))
-                .ProjectTo<ProductosListDto>(mapper.ConfigurationProvider)
+                .ProjectTo<ProductosPruebaListDto>(mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return productos;
@@ -92,20 +93,20 @@ public class CatProductosRepository : ICatProductosRepository
         }
     }
 
-    public async Task<PaginaResultado<ProductosListDto>> ObtenerListadoPaginadoDto(string? filtro, int pagina, int filas)
+    public async Task<PaginaResultado<ProductosPruebaListDto>> ObtenerListadoPaginadoDto(string? filtro, int pagina, int filas)
     {
         try
         {
-            IQueryable<ProductosListDto> productos = context.Productos
+            IQueryable<ProductosPruebaListDto> productos = context.ProductosPrueba
                 .Include(p => p.Estatus)
-                .ProjectTo<ProductosListDto>(mapper.ConfigurationProvider)
+                .ProjectTo<ProductosPruebaListDto>(mapper.ConfigurationProvider)
                 .OrderByDescending(p => p.Id);
 
             if (!string.IsNullOrEmpty(filtro))
                 productos = productos.Where(p => p.Nombre.Contains(filtro));
                 
 
-            PaginaResultado<ProductosListDto> resultados = new();
+            PaginaResultado<ProductosPruebaListDto> resultados = new();
 
             resultados = await productos.ObtenerListadoPaginadoAsync(pagina, filas);
 
@@ -117,17 +118,17 @@ public class CatProductosRepository : ICatProductosRepository
         }
     }
 
-    public async Task<bool> GrabarActualizar(ProductoDto producto)
+    public async Task<bool> GrabarActualizar(ProductoPruebaDto producto)
     {
         try
         {
-            var existeEntidad = await context.Productos.AsTracking()
+            var existeEntidad = await context.ProductosPrueba.AsTracking()
                 .FirstOrDefaultAsync(x => x.Id == producto.Id);
 
             if (existeEntidad is null)
             {
-                var prod = mapper.Map<Producto>(producto);
-                prod.UsuarioId = 1;
+                var prod = mapper.Map<ProductoPrueba>(producto);
+                
                 prod.FechaRegistro = DateTime.Now;
                 prod.FechaEstatus = DateTime.Now;
 
@@ -150,7 +151,7 @@ public class CatProductosRepository : ICatProductosRepository
     {
         try
         {
-            var existeEntidad = await context.Productos.AsTracking()
+            var existeEntidad = await context.ProductosPrueba.AsTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (existeEntidad is not null)
@@ -166,7 +167,7 @@ public class CatProductosRepository : ICatProductosRepository
         }
     }
 
-    public async Task<ProductoDto> RellenarCatalogos(ProductoDto producto)
+    public async Task<ProductoPruebaDto> RellenarCatalogos(ProductoPruebaDto producto)
     {
         try
         {

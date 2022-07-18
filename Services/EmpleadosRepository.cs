@@ -10,6 +10,7 @@ public interface IEmpleadosRepository : IGenericRepository<Empleado>
     Task<EmpleadoDto> ObtenerEmpleadoDto(int id);
     Task<bool> GrabarActualizarEmpleado(EmpleadoDto empleado);
     Task<bool> EliminarEmpleado(int id);
+    Task<PaginaResultado<EmpleadosListDto>> ObtenerListadoPaginadoDto(string? filtro, int pagina, int filas);
 }
 
 public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosRepository
@@ -83,6 +84,31 @@ public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosReposi
         return emp;
     }
 
+    public async Task<PaginaResultado<EmpleadosListDto>> ObtenerListadoPaginadoDto(string? filtro, int pagina, int filas)
+    {
+        try
+        {
+            IQueryable<EmpleadosListDto> empleados = _context.Empleados
+                .Include(e => e.Departamento)
+                .Include(e => e.Estatus)
+                .ProjectTo<EmpleadosListDto>(mapper.ConfigurationProvider)
+                .OrderByDescending(e => e.EmpleadoId);
+
+            if (!string.IsNullOrEmpty(filtro))
+                empleados = empleados.Where(e => e.Apaterno.Contains(filtro) || e.Amaterno.Contains(filtro) || e.Nombre.Contains(filtro));
+
+            PaginaResultado<EmpleadosListDto> resultados = new();
+
+            resultados = await empleados.ObtenerListadoPaginadoAsync(pagina, filas);
+
+            return resultados;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
     public async Task<EmpleadoDto> RellenarCatalogos(EmpleadoDto empleado)
     {
         try
@@ -102,6 +128,10 @@ public class EmpleadosRepository : GenericRepository<Empleado>, IEmpleadosReposi
             empleado.Colonias = await catalogosRepository.GetSelectListColonias();
             empleado.Estatuses = new SelectList(await _context.Estatus.ToListAsync(), "EstatusId", "Descripcion", "V");
             empleado.Sucursales = new SelectList(await _context.Sucursales.ToListAsync(), "SucursalId", "Nombre");
+            if(empleado.EmpleadoId == 0)
+            {
+                empleado.MunicipioId = "006";
+            }
         }
         catch
         {

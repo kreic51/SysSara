@@ -19,12 +19,13 @@ public class Empleado
     public string? Calle { get; set; }
     public string? NoExt { get; set; }
     public string? NoInt { get; set; }
-    public string? ColoniaId { get; set; }    
+    public string? ColoniaId { get; set; }
     public string? MunicipioId { get; set; }
     public string? EstadoId { get; set; }
     public DateTime? FechaIngreso { get; set; } = DateTime.Now;
     public string? EstatusId { get; set; }
     public string? UserRegistro { get; set; }
+    public string? Foto { get; set; }
     public DateTime? FechaRegistro { get; set; }
     public Departamento? Departamento { get; set; }
     public Estatus? Estatus { get; set; }
@@ -34,7 +35,7 @@ public class EmpleadoConfiguration : IEntityTypeConfiguration<Empleado>
 {
     public void Configure(EntityTypeBuilder<Empleado> builder)
     {
-        builder.ToTable("Empleados");
+        builder.ToTable("RH_Empleados");
 	    builder.HasKey(e => e.EmpleadoId);
     }
 }

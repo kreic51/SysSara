@@ -1,6 +1,6 @@
 ﻿namespace SysSara.Models.Dtos;
 
-public class ProductosListDto
+public class ProductosPruebaListDto
 {    
     public int Id { get; set; }
     [Display(Name = "Codigo de Barras")]

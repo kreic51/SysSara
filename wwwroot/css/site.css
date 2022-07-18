@@ -50,7 +50,11 @@
     border-color: #6c757d transparent transparent transparent;
 } */
 
-.action {
+/*input {
+    text-transform: uppercase;
+}*/
+
+tr .action {
     visibility: hidden;
 }
 
@@ -67,6 +71,15 @@ input:-internal-autofill-previewed {
     background-color: white !important;
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
+.sidebar-search-results .search-title strong {
+    color: #495057;
+}
+
+.dark-mode .sidebar-search-results .search-title strong {
+    color: #f8f9fa;
+}
+
 
 .dark-mode input:-webkit-autofill,
 .dark-mode input:-webkit-autofill:hover,

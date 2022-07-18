@@ -5,33 +5,37 @@ public interface IUnitOfWork : IDisposable
     ICatalogosRepository Catalogos { get; }
     IEmpleadosRepository Empleados { get; }
     ICatProductosRepository CatProductos { get; }
+    IProductosStockRepository ProductosStock { get; }
     Task<int> CompleteAsync();
 }
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext context;
     private readonly IMapper mapper;
 
     public ICatalogosRepository Catalogos { get; private set; }
     public IEmpleadosRepository Empleados { get; private set; }
     public ICatProductosRepository CatProductos { get; private set; }
+    public IProductosStockRepository ProductosStock { get; private set; }
 
     public UnitOfWork(AppDbContext context, IMapper mapper)
     {
-        _context = context;
-        this.mapper = mapper;        
-        Catalogos = new CatalogosRepository(_context);
-        Empleados = new EmpleadosRepository(_context, mapper, Catalogos);
-        CatProductos = new CatProductosRepository(_context, mapper);
+        this.context = context;
+        this.mapper = mapper;
+
+        Catalogos = new CatalogosRepository(context);
+        Empleados = new EmpleadosRepository(context, mapper, Catalogos);
+        CatProductos = new CatProductosRepository(context, mapper);
+        ProductosStock = new ProductosStockRepository(context, mapper);
     }
 
     public async Task<int> CompleteAsync()
     {
-        return await _context.SaveChangesAsync();
+        return await context.SaveChangesAsync();
     }
     public void Dispose()
     {
-        _context.Dispose();
+        context.Dispose();
     }
 }

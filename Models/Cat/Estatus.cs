@@ -11,6 +11,10 @@ public class EstatusConfiguration : IEntityTypeConfiguration<Estatus>
     public void Configure(EntityTypeBuilder<Estatus> builder)
     {
         builder.ToTable("Cat_Estatus");
-	    builder.HasKey(x => x.EstatusId);        
+
+	    builder.HasKey(x => x.EstatusId);
+
+        builder.Property(x => x.EstatusId)
+            .HasMaxLength(2);
     }
 }

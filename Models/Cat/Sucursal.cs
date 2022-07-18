@@ -12,7 +12,7 @@ public class SucursalConfiguration : IEntityTypeConfiguration<Sucursal>
 {
     public void Configure(EntityTypeBuilder<Sucursal> builder)
     {
-        builder.ToTable("Sucursales");
+        builder.ToTable("Cat_Sucursales");
         builder.HasKey(x => x.SucursalId);        
     }
 }

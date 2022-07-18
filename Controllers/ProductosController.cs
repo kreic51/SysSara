@@ -23,7 +23,7 @@ public class ProductosController : Controller
 
         ViewData["Filtro"] = palabraBuscada;
                 
-        PaginaResultado<ProductosListDto> paginaResultado = new();
+        PaginaResultado<ProductosPruebaListDto> paginaResultado = new();
 
         try
         {
@@ -50,7 +50,7 @@ public class ProductosController : Controller
         ViewBag.MenuActivo = "M5";
         ViewBag.MenuActivoH = "M5H1";
 
-        ProductoDto producto = new();
+        ProductoPruebaDto producto = new();
 
         try
         {
@@ -70,7 +70,7 @@ public class ProductosController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<JsonResult> Agregar(ProductoDto producto)
+    public async Task<JsonResult> Agregar(ProductoPruebaDto producto)
     {
         if (!ModelState.IsValid)
         {
@@ -79,6 +79,7 @@ public class ProductosController : Controller
 
         try
         {
+            producto.UsuarioId = User.Claims.FirstOrDefault(c => c.Type == "UsuarioId").Value;
             await unitOfWork.CatProductos.GrabarActualizar(producto);
             await unitOfWork.CompleteAsync();
         }
